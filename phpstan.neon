@@ -1,0 +1,18 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    reportUnmatchedIgnoredErrors: false
+
+    paths:
+        - app
+    excludePaths:
+        - app/Filament
+
+    level: 6
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    checkOctaneCompatibility: true
+    checkModelProperties: true

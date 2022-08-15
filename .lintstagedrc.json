@@ -1,0 +1,4 @@
+{
+    "resources/**": ["prettier --write"],
+    "*.php": "./vendor/bin/pint"
+}

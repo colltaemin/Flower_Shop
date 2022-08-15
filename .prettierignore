@@ -1,0 +1,46 @@
+# Always follow this structure: Extensions -> Folders -> Files
+
+# Extensions
+*.*
+!*.js
+!*.jsx
+!*.ts
+!*.tsx
+!*.flow
+!*.json
+!*.css
+!*.scss
+!*.less
+!*.html
+!*.vue
+!*.graphql
+!*.md
+!*.yaml
+!*.yaml
+!*.blade.php
+
+# Folders
+/*
+!/.github
+!/.vscode
+!/lang
+!/resources
+
+#Files
+!.eslintrc.js
+!.lintstagedrc.json
+!.prettierrc.json
+!.styleci.yml
+!CHANGELOG.md
+!commitlint.config.js
+!composer.json
+!CONTRIBUTING.md
+!DEPLOYMENT.md
+!infection.json
+!package.json
+!pint.json
+!postcss.config.js
+!README.md
+!tailwind.config.js
+!tsconfig.json
+!vite.config.ts

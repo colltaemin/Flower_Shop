@@ -1,0 +1,57 @@
+name: Linting
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      # https://stackoverflow.com/questions/57612428/cloning-private-github-repository-within-organisation-in-actions
+      # - name: Setup access to the private repository
+      #   run: eval `ssh-agent -s` && ssh-add - <<< '${{ secrets.PRIVATE_SSH_KEY }}'
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install Composer Dependencies
+        run: composer install -q --no-interaction --no-progress
+
+      - name: Run Laravel Pint
+        run: ./vendor/bin/pint -vvv
+
+      - name: Commit Laravel Pint changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Laravel Pint Fixed!'
+          commit_options: '--no-verify'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Run prettier
+        run: npx prettier --write .
+
+      - name: Commit Prettier Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Prettier Fixed!'
+          commit_options: '--no-verify'
+
+      - name: Run PHPStan
+        run: ./vendor/bin/phpstan --error-format=github

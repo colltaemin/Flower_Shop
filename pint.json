@@ -1,0 +1,23 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "@DoctrineAnnotation": true,
+        "@PHP81Migration": true,
+        "@PhpCsFixer": true,
+
+        "@PHPUnit84Migration:risky": true,
+        "@PHP80Migration:risky": true,
+        "@PhpCsFixer:risky": true,
+
+        "no_unset_on_property": false,
+        "php_unit_internal_class": false,
+        "php_unit_test_class_requires_covers": false,
+        "phpdoc_no_alias_tag": {
+            "replacements": {
+                "property-read": "property",
+                "property-write": "property",
+                "link": "see"
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+          image: mysql:8.0
+          env:
+              MYSQL_ALLOW_EMPTY_PASSWORD: yes
+              MYSQL_DATABASE: test
+          ports:
+              - 3306
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      # https://stackoverflow.com/questions/57612428/cloning-private-github-repository-within-organisation-in-actions
+      # - name: Setup access to the private repository
+      #   run: eval `ssh-agent -s` && ssh-add - <<< '${{ secrets.PRIVATE_SSH_KEY }}'
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Copy .env file
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install -q  --no-interaction --no-progress
+
+      - name: Generate laravel key
+        run: php artisan key:generate
+
+      - name: Setup directory permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Execute tests
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_DATABASE: 'test'
+          DB_USERNAME: 'root'
+          DB_PASSWORD: ''
+        run: php artisan test
