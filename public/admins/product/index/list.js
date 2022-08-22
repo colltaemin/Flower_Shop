@@ -34,7 +34,9 @@ function actionDelete(event) {
             'Deleted!',
             'Your file has been deleted.',
             'success'
-          )
+            ).then(()=>{
+              location.reload();
+            })
                 
             
         }

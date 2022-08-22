@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 
 class RoleController extends Controller
@@ -17,6 +18,8 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('admin.role.add');
+        $permissionsParent = Permission::where('parent_id', 0)->get();
+
+        return view('admin.role.add', compact('permissionsParent'));
     }
 }

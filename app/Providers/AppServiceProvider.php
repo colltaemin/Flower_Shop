@@ -16,11 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Eloquent::preventLazyLoading(! app()->isProduction());
-    }
+    // Bootstrap any application services.
+    // public function boot(): void
+    // {
+    //     Eloquent::preventLazyLoading(! app()->isProduction());
+    // }
 }
