@@ -1,0 +1,19 @@
+.select2-selection__choice{
+    background-color: black !important;
+}
+
+.select2-container .select2-selection--single{
+    height: 35px;
+}
+
+.select2-container .select2-selection--multiple{
+    height: 35px;
+}
+
+
+
+.alert-danger{
+    margin-top: 5px;
+    padding: 3px 5px;
+    text-align: center;
+}
