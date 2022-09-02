@@ -82,7 +82,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-12 height: 100px">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nhập nôị dung</label>
                                 <textarea name='contents' class="form-control tinymce_editor_init" rows="3">{{ $product->content }}</textarea>
@@ -91,11 +91,11 @@
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-
                     </div>
+
                 </div>
+            </div>
         </form>
-    </div>
     </div>
 @endsection
 

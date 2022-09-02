@@ -312,30 +312,46 @@
     <x-header>
 
     </x-header>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên vai trò</th>
+                                    <th scope="col">Mô tả vai trò</th>
+                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Action</th>
 
-    {{-- <div
-        class="items-top relative flex min-h-screen justify-center bg-gray-100 py-4 dark:bg-gray-900 sm:items-center sm:pt-0">
-        @if (Route::has('login'))
-            <div class="fixed top-0 right-0 hidden px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="text-sm text-gray-700 underline dark:text-gray-500">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 underline dark:text-gray-500">Log in</a>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 underline dark:text-gray-500">Register</a>
-                    @endif
-                @endauth
+                            </tbody>
+                        </table>
+
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        {{-- {{ $roles->links('pagination::bootstrap-4') }} --}}
+                    </div>
+
+                </div>
             </div>
-        @endif
-    </div> --}}
+        </div>
+    </div>
     <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
+
+    <script src="{{ asset('admins/product/index/list.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')
 
 </body>

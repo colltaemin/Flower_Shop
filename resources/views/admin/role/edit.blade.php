@@ -19,16 +19,16 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <form action="{{ route('roles.store') }} " method="post" enctype="multipart/form-data"
-                        style="width: 100%">
+                    <form action="{{ route('roles.update', ['id' => $role->id]) }} " method="post"
+                        enctype="multipart/form-data" style="width: 100%">
                         <div class="col-md-12">
                             @csrf
                             <div class="col-md-12">
 
                                 <div class="form-group col-md-12">
                                     <label>Tên vai trò</label>
-                                    <input type="text" class="form-control" name="name"
-                                        placeholder="Nhập tên vai trò">
+                                    <input type="text" class="form-control" name="name" placeholder="Nhập tên vai trò"
+                                        value="{{ $role->name }}">
 
                                     {{-- <div class="col-md-6">
                                                     @error('price')
@@ -39,7 +39,7 @@
                                 <div class="form-group col-md-12">
                                     <label>Mô tả vai trò</label>
                                     <input type="text" class="form-control" name="display_name"
-                                        placeholder="Nhập mô tả vai trò">
+                                        placeholder="Nhập mô tả vai trò" value="{{ $role->display_name }}">
                                     {{-- <div class="col-md-6">
                                                     @error('name')
                                                         <div class="text-danger">{{ $message }}</div>
@@ -71,6 +71,7 @@
                                                         <h5 class="card-title">
                                                             <label for="">
                                                                 <input type="checkbox" name="permissions_id[]"
+                                                                    {{ $permissionsChecked->contains($permissionsChildItem->id) ? 'checked' : '' }}
                                                                     value="{{ $permissionsChildItem->id }}"
                                                                     class="checkbox_child">
                                                                 {{ $permissionsChildItem->name }}

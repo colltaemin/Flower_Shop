@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CheckLoginController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -20,40 +19,42 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [CheckLoginController::class, 'checkUserType'])->middleware('auth');
+Route::get('/login', 'CheckLoginController@checkLogin');
 
-// Route::get('/', fn () => view('welcome'));
+Route::get('/', fn () => view('welcome'));
 
-Route::get('/admin/home', fn () => view('home'))->name('admin.home');
+Route::get('/admin/home', fn () => view('home'))->name('admin.home')->middleware('auth');
 
 Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
+Route::get('/cart', fn () => view('cart'))->name('cart');
+
 Route::prefix('admin')->group(function (): void {
     Route::prefix('categories')->group(function (): void {
-        Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
-        Route::get('/index', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('categories.create')->middleware('can:add-category');
+        Route::get('/index', [CategoryController::class, 'index'])->name('categories.index')->middleware('can:list-category');
         Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
-        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit')->middleware('can:edit-category');
         Route::post('/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
-        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
+        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('categories.delete')->middleware('can:delete-category');
     });
 
     Route::prefix('menus')->group(function (): void {
-        Route::get('/', [MenuController::class, 'index'])->name('menus.index');
-        Route::get('/create', [MenuController::class, 'create'])->name('menus.create');
+        Route::get('/', [MenuController::class, 'index'])->name('menus.index')->middleware('can:list-menu');
+        Route::get('/create', [MenuController::class, 'create'])->name('menus.create')->middleware('can:add-menu');
         Route::post('/store', [MenuController::class, 'store'])->name('menus.store');
-        Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menus.edit');
+        Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menus.edit')->middleware('can:edit-menu');
         Route::post('/update/{id}', [MenuController::class, 'update'])->name('menus.update');
-        Route::get('/delete/{id}', [MenuController::class, 'delete'])->name('menus.delete');
+        Route::get('/delete/{id}', [MenuController::class, 'delete'])->name('menus.delete')->middleware('can:delete-menu');
     });
 
     Route::prefix('products')->group(function (): void {
-        Route::get('/', [AdminProductController::class, 'index'])->name('products.index');
-        Route::get('/create', [AdminProductController::class, 'create'])->name('products.create');
+        Route::get('/', [AdminProductController::class, 'index'])->name('products.index')->middleware('can:list-product');
+        Route::get('/create', [AdminProductController::class, 'create'])->name('products.create')->middleware('can:add-product');
         Route::post('/store', [AdminProductController::class, 'store'])->name('products.store');
-        Route::get('/edit/{id}', [AdminProductController::class, 'edit'])->name('products.edit');
+        Route::get('/edit/{id}', [AdminProductController::class, 'edit'])->name('products.edit')->middleware('can:edit-product');
         Route::post('/update/{id}', [AdminProductController::class, 'update'])->name('products.update');
-        Route::get('/delete/{id}', [AdminProductController::class, 'delete'])->name('products.delete');
+        Route::get('/delete/{id}', [AdminProductController::class, 'delete'])->name('products.delete')->middleware('can:delete-product');
     });
 
     Route::prefix('users')->group(function (): void {
@@ -62,7 +63,7 @@ Route::prefix('admin')->group(function (): void {
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/update/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete')->middleware('can:delete-user');
     });
 
     Route::prefix('roles')->group(function (): void {

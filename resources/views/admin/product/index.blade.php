@@ -72,10 +72,10 @@
                     <div class="col-md-12 d-flex justify-content-center">
                         {{ $products->links('pagination::bootstrap-4') }}
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

@@ -22,6 +22,7 @@ class PermissionFactory extends Factory
             'name' => $this->faker->name,
             'display_name' => $this->faker->text,
             'parent_id' => 0,
+            'key_code' => $this->faker->text,
         ];
     }
 }

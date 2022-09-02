@@ -52,4 +52,17 @@ class User extends Authenticatable
             ->withTimestamps()
         ;
     }
+
+    public function checkPermissionAccess($permissionCheck)
+    {
+        $roles = auth()->user()->roles;
+        foreach ($roles as $role) {
+            $permissions = $role->permissions;
+            if ($permissions->contains('key_code', $permissionCheck)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

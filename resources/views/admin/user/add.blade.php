@@ -25,7 +25,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label>Tên User</label>
-                                    <input type="" class="form-control" name="name" placeholder="Nhập ten user">
+                                    <input type="text" class="form-control" name="name" placeholder="Nhập ten user">
 
                                     {{-- <div class="col-md-6">
                                             @error('price')
@@ -69,13 +69,12 @@
 
                         </div>
 
-                    </div>
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
     </div>

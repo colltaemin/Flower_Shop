@@ -35,7 +35,6 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'userType' => $request->userType,
                 'email_verified_at' => now(),
             ]);
 
@@ -67,7 +66,6 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'userType' => $request->userType,
                 'email_verified_at' => now(),
             ]);
             $users = User::find($id);

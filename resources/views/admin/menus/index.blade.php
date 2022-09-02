@@ -55,10 +55,10 @@
                     <div class="col-md-12 d-flex justify-content-center">
                         {{ $menus->links('pagination::bootstrap-4') }}
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

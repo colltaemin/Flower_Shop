@@ -45,7 +45,7 @@
                         <i class="nav-icon fa fa-th" aria-hidden="true"></i>
                         <p>
                             Danh Mục Sản Phẩm
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
@@ -55,35 +55,35 @@
                         <i class="nav-icon fa fa-bars" aria-hidden="true"></i>
                         <p>
                             Menu
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('products.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fa-solid fa-shop"></i>
                         <p>
                             Danh Sách Sản Phẩm
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fa-solid fa-clipboard-user"></i>
                         <p>
                             Danh Sách Users
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('roles.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fa-solid fa-users-rectangle"></i>
                         <p>
                             Vai trò Users(Role)
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
