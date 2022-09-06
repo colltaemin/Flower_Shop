@@ -313,24 +313,13 @@
 
     </x-header>
 
-    {{-- <div
-        class="items-top relative flex min-h-screen justify-center bg-gray-100 py-4 dark:bg-gray-900 sm:items-center sm:pt-0">
-        @if (Route::has('login'))
-            <div class="fixed top-0 right-0 hidden px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="text-sm text-gray-700 underline dark:text-gray-500">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 underline dark:text-gray-500">Log in</a>
+    <x-body>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 underline dark:text-gray-500">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-    </div> --}}
+    </x-body>
+
+    <x-footer>
+
+    </x-footer>
     <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">

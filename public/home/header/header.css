@@ -1,4 +1,37 @@
-.fa{
-   width: max-content;
-   right: 0;
+.nav{
+   background-color: rgb(226, 207, 207);
 }
+.nav-img{
+   align-items: flex-start;
+}
+
+.wrapper{
+   margin: 0 auto;
+   width: 100%;
+   background-color: rgb(217, 236, 236);
+   margin-top: 110px;
+   text-align: center;
+}
+
+h2{
+   font-size: 20px;
+   font-weight: 600;
+   color: rgb(231, 9, 9);
+   text-align: left;
+   margin-left: 20px;
+}
+
+.wrapper-body{
+   margin-top: 20px;
+   
+}
+
+header {
+   position: fixed;
+   top: 0;
+  
+   width: 100%;
+
+ }
+  
+
