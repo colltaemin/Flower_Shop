@@ -8,9 +8,18 @@
 .wrapper{
    margin: 0 auto;
    width: 100%;
+   /* background-color: rgb(217, 236, 236); */
+   margin-top: 110px;
+   text-align: center;
+}
+
+.wrapper-home{
+   margin: 0 auto;
+   width: 100%;
    background-color: rgb(217, 236, 236);
    margin-top: 110px;
    text-align: center;
+
 }
 
 h2{
@@ -18,20 +27,36 @@ h2{
    font-weight: 600;
    color: rgb(231, 9, 9);
    text-align: left;
-   margin-left: 20px;
+   
+   margin-top: 15px;
 }
 
 .wrapper-body{
-   margin-top: 20px;
+   /* margin-top: 20px; */
    
 }
 
 header {
    position: fixed;
    top: 0;
-  
+   z-index: 100;
    width: 100%;
 
  }
-  
+
+.product{
+   margin-top: 10px;
+}
+
+.item{
+   margin-top: 15px;
+}
+
+
+.card-body{
+   max-width: 25rem;
+   font-size: 13px;
+}
+
+
 

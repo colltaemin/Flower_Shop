@@ -3,10 +3,13 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,13 +24,32 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/login', 'CheckLoginController@checkLogin');
 
-Route::get('/', fn () => view('welcome'));
-
 Route::get('/admin/home', fn () => view('home'))->name('admin.home')->middleware('auth');
 
 Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
-Route::get('/cart', fn () => view('cart'))->name('cart');
+Route::get('/theme', fn () => view('pages.theme'))->name('theme');
+
+Route::get(
+    '/carts',
+    function () {
+    $products = [];
+    $carts = Session::get('cart', []);
+    foreach ($carts as $cart) {
+        $products = array_merge($products, [Product::findOrFail($cart['id'])]);
+    }
+
+    return view('pages.carts', compact('products'));
+}
+)->name('carts');
+
+Route::get('/order', fn () => view('pages.order'))->name('order');
+
+Route::get('/', [HomeController::class, 'home'])->name('home');
+
+Route::get('/theme', [HomeController::class, 'theme'])->name('theme');
+
+Route::get('/product/{product}', [HomeController::class, 'product'])->name('product');
 
 Route::prefix('admin')->group(function (): void {
     Route::prefix('categories')->group(function (): void {
@@ -77,5 +99,13 @@ Route::prefix('admin')->group(function (): void {
 });
 
 Route::get('/dashboard', fn () => view('dashboard'))->middleware(['auth'])->name('dashboard');
+
+Route::prefix('cart')->controller(CartController::class)->name('cart.')->group(function (): void {
+    Route::get('', 'getCart')->name('all');
+    Route::post('', 'addProduct')->name('add');
+    Route::delete('', 'removeProduct')->name('delete');
+    Route::patch('increase', 'increaseQuantity')->name('increase');
+    Route::patch('decrease', 'decreaseQuantity')->name('decrease');
+});
 
 require __DIR__.'/auth.php';

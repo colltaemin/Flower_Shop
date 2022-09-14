@@ -7,8 +7,6 @@
 
     <title>MyWebsite</title>
     <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,6 +15,7 @@
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('home/header/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/theme.css') }}">
     @yield('css')
     <!-- Styles -->
     <style>
@@ -312,46 +311,53 @@
     <x-header>
 
     </x-header>
-    <div class="content-wrapper">
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">STT</th>
-                                    <th scope="col">Tên vai trò</th>
-                                    <th scope="col">Mô tả vai trò</th>
-                                    <th scope="col">Ngày tạo</th>
-                                    <th scope="col">Action</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
+    <div class="wrapper">
 
-                            </tbody>
-                        </table>
+        <div class="container">
+            <div class="row">
 
-                        </tbody>
-                        </table>
+                <div class="col-12 row">
+                    <div style="text-align: left">
+                        <span>Tìm kiếm</span>
+                        <a class="search" href="">GIÁ TỪ THẤP TỚI CAO</a>
+                        <a class="search"href="">GIÁ TỪ CAO TỚI THẤP</a>
+
                     </div>
-                    <div class="col-md-12 d-flex justify-content-center">
-                        {{-- {{ $roles->links('pagination::bootstrap-4') }} --}}
-                    </div>
+                    @foreach ($products as $product)
+                        <div class="item col-md-3 relative justify-center">
+                            <div class="card" style="text-align: center">
+                                <a href="">
+                                    <img class="" src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
+                                </a>
 
+                                <div class="card-body">
+                                    <a class="card-text">{{ $product->name }}</a>
+                                    <div>
+                                        <span>{{ $product->price }} đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="col-md-12 d-flex justify-content-center m-3">
+                        {{ $products->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    </div>
+
+    <x-footer>
+
+    </x-footer>
     <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
-
-    <script src="{{ asset('admins/product/index/list.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')
 
 </body>

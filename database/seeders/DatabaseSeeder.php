@@ -149,5 +149,29 @@ class DatabaseSeeder extends Seeder
             'parent_id' => 16,
             'key_code' => 'delete_user',
         ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Sinh Nhật',
+        ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Khai Trương',
+        ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Chúc Mừng',
+        ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Chia Buồn',
+        ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Tình Yêu',
+        ]);
+
+        \App\Models\Category::factory(1)->create([
+            'name' => 'Hoa Mừng Tốt Nghiệp',
+        ]);
     }
 }

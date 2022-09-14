@@ -1,0 +1,25 @@
+.range-price{
+   width: 100%;
+   margin: 2px;
+}
+
+.badge{
+   
+    border-radius: 100%;
+    padding: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+ 
+    margin: 3px ;
+}
+
+.product{
+    margin-top: 10px;
+}
+
+.search{
+    margin-left: 10px;
+    
+}
+
