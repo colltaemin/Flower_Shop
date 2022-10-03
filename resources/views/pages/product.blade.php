@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('home/header/header.css') }}">
     <link rel="stylesheet" href="{{ asset('home/body/body.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+
     @yield('css')
     <!-- Styles -->
     <style>
@@ -317,103 +319,173 @@
         <div class="row">
             <div class="col-3 overflow-hidden">
                 <img class="img-thumbnail h-full w-full" src="{{ $product->feature_image_path }}" alt="Card image cap">
+
             </div>
+
             <div class="col-9">
                 <h2>{{ $product->name }}</h2>
                 <p>{{ $product->price }} Đồng</p>
                 <p>{{ $product->content }}</p>
-                <div class="offer border-1 m-2 border">
+
+                <div class="offer">
 
                     <h4>Lưu ý</h4>
                     <p>Sản phẩm bạn đang chọn là sản phẩm được thiết kế đặc biệt!</p>
-                    <p>Hiện nay, Hoayeuthuong.com chỉ thử nghiệm cung cấp cho thị trường <strong>Tp. Hồ Chí Minh và Hà
-                            Nội</strong></p>
+                    <p>Hiện nay, DesertFlower.com chỉ thử nghiệm cung cấp cho thị trường <strong>Tp. Hồ Chí Minh
+                        </strong></p>
 
                 </div>
                 <div class="m-2">
-                    <button class="btn btn-primary" role="button"
+                    <button class="btn btn-primary text-left" role="button"
                         onclick="addToCart(@json($product->id))">Thêm vào giỏ hàng</button>
                 </div>
-                <div class="offer m-2">
-                    <h4>ƯU ĐÃI ĐẶC BIỆT</h4>
+                <div class="offer">
+                    <h4>Ưu đãi đặc biệt</h4>
                     <ul class="benefit">
-                        <li>Giao miễn phí trong nội thành 63/63 tỉnh</li>
+                        <li>Giao miễn phí trong Thành phố Hồ Chí Minh</li>
                         <li>Giao gấp trong vòng 2 giờ</li>
                         <li>Cam kết 100% hoàn lại tiền nếu Bạn không hài lòng</li>
                         <li>Cam kết hoa tươi trên 3 ngày</li>
                     </ul>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper-body">
-        <h2><span title="Mẫu hoa tuơng tự">
-                MẪU HOA TƯƠNG TỰ
-            </span>
-        </h2>
-        <div class="container">
+                <div>
+                    <div class="col-md-12 rate">
+                        <div id="rateYo" class="m-2"></div>
+                        <div class="col-md-12 m-2">
+                            <div class="star">
+                                <strong>Đánh giá : {{ $ratingAvg }}</strong>
+                            </div>
 
-            <div class="row">
+                        </div>
+                        <form action="{{ route('users.rating') }}" method="post">
+                            @csrf
+                            <input class="form-control" type="hidden" name="number_rating" id="number_rating">
+                            <input class="form-control" type="hidden" name="product_id" id=""
+                                value="{{ $product->id }}">
+                            {{-- input user_id --}}
+                            <input class="form-control" type="hidden" name="user_id" id=""
+                                value="{{ Auth::user()->id }}">
 
-                <div class="col-md-12">
-                    <div class="row">
-                        @foreach ($productsInCategory as $product)
-                            <div class="item col-md-2 relative justify-center">
-                                <div class="card" style="text-align: center">
-                                    <a href="{{ route('product', [$product]) }}">
-                                        <img class="" src="../images/13262_tinh-dau-tho-ngay.jpg"
-                                            alt="Card image cap">
-                                    </a>
+                            <input class="form-control" type="hidden" name="name" id=""
+                                value="{{ Auth::user()->name }}">
+                            <input class="form-control" type="" name="content" id=""
+                                placeholder="Nhận xét">
 
-                                    <div class="card-body">
-                                        <a href="{{ route('product', [$product]) }}"
-                                            class="card-text">{{ $product->name }}</a>
-                                        <div>
-                                            <span>{{ $product->price }} đ</span>
-                                        </div>
-                                    </div>
+                            <button type="submit" class="btn btn-primary m-2">Gửi đánh
+                                giá</button>
+                        </form>
+                    </div>
+
+                    <div class="col-md-12 comment">
+                        <div class="star">
+                            <strong>Nhận xét : </strong>
+                        </div>
+
+                        @foreach ($ratings as $rating_item)
+                            <div class="col-md-12 m-2">
+                                <div class="col-md-12">
+                                    <strong>{{ $rating_item->user->name }}</strong>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <p>{{ $rating_item->content }}</p>
+                                </div>
+                                <div id="rateYo_item" class="m-2"></div>
                             </div>
                         @endforeach
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="wrapper-body">
+                <h5><span title="Mẫu hoa tuơng tự" class="m-2">
+                        MẪU HOA TƯƠNG TỰ
+                    </span>
+                </h5>
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                @foreach ($productsInCategory as $product)
+                                    <div class="item col-md-2 relative justify-center">
+                                        <div class="card" style="text-align: center">
+                                            <a href="{{ route('product', [$product]) }}">
+                                                <img class="" src="../images/13262_tinh-dau-tho-ngay.jpg"
+                                                    alt="Card image cap">
+                                            </a>
+
+                                            <div class="card-body">
+                                                <a href="{{ route('product', [$product]) }}"
+                                                    class="card-text">{{ $product->name }}</a>
+                                                <div>
+                                                    <span>{{ $product->price }} đ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-center m-2">
+                            {{ $productsInCategory->links('pagination::simple-bootstrap-5') }}
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-12 d-flex justify-content-center m-2">
-                    {{ $productsInCategory->links('pagination::simple-bootstrap-5') }}
-                </div>
+
             </div>
-        </div>
+            <x-footer>
 
-    </div>
-    <x-footer>
+            </x-footer>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+                integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+            </script>
+            <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    </x-footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
-        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
-    <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @yield('js')
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <script>
-        async function addToCart(id) {
-            const {
-                data
-            } = await axios.post(@json(route('cart.add')), {
-                id: id,
-            });
+            @yield('js')
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+            <script>
+                $(function() {
+                    let ratingAvg = {{ $ratingAvg }};
+                    $("#rateYo").rateYo({
+                        rating: ratingAvg,
+                        normalFill: "#A0A0A0"
+                    }).on("rateyo.set", function(e, data) {
 
-            renderCount(data);
+                        var rating = data.rating;
+                        $('#number_rating').val(rating);
 
-            await Swal.fire({
-                title: 'Thêm vào giỏ hàng thành công',
-                icon: 'success',
-            });
-        }
-    </script>
+                    });
+                });
+            </script>
+            <script></script>
+            <script>
+                async function addToCart(id) {
+                    const {
+                        data
+                    } = await axios.post(@json(route('cart.add')), {
+                        id: id,
+                    });
+
+                    renderCount(data);
+
+                    await Swal.fire({
+                        title: 'Thêm vào giỏ hàng thành công',
+                        icon: 'success',
+                    });
+                }
+            </script>
+
 </body>
 
 </html>

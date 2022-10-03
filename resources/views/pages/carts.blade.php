@@ -315,25 +315,37 @@
     <div class="content-wrapper" style="margin-top: 110px">
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">STT</th>
-                                    <th scope="col">Tên vai trò</th>
-                                    <th scope="col">Giá</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Action</th>
 
-                                </tr>
-                            </thead>
-                            <tbody id="cart-items">
-                            </tbody>
-                        </table>
-                        <strong id='total'></strong>
-                        <a href="{{ route('order') }}" class="btn btn-primary" role="button">Đặt hàng</a>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Hành động</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-items">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="m-3">
+                                <strong id='total'></strong>
+                            </div>
+                            <div class="m-3">
+                                <a href="{{ route('order') }}" class="btn btn-primary" role="button" id="oder">Đặt
+                                    hàng</a>
+
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-12 d-flex justify-content-center">
                         {{-- {{ $roles->links('pagination::bootstrap-4') }} --}}
                     </div>
@@ -341,99 +353,129 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
-        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+            integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
-    <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+        <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
 
-    <script src="{{ asset('admins/product/index/list.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @yield('js')
-    <script>
-        function calTototalCart(cart) {
-            let total = 0;
-            for (const key in cart) {
-                const item = cart[key];
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @yield('js')
+        <script>
+            const oder = document.getElementById('oder');
+            oder.onclick = function() {
+                const cartItems = document.getElementById('cart-items');
+                if (cartItems.innerHTML == '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Giỏ hàng trống!',
+                    })
+                    return false;
+                }
 
-                total += item.price * item.quantity;
             }
 
-            return total;
-        }
+            function calTototalCart(cart) {
+                let total = 0;
+                for (const key in cart) {
+                    const item = cart[key];
 
-        function renderCartItems(cart) {
-            const tbody = document.getElementById('cart-items');
-            tbody.innerHTML = '';
-            for (const key in cart) {
-                const item = cart[key];
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
+                    total += item.price * item.quantity;
+                }
+
+                return total;
+            }
+
+            function renderCartItems(cart) {
+                const tbody = document.getElementById('cart-items');
+                tbody.innerHTML = '';
+                for (const key in cart) {
+                    const item = cart[key];
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
                 <th scope="col">${item.id}</th>
                 <th scope="col">${item.name}</th>
                 <th scope="col">${item.price}</th>
                 <th>
                     <button onclick="decreaseQuantity(${item.id})">-</button>
-                    <input type="number" value="${item.quantity}" >
+                    <span class="m-2">${item.quantity}</span>
                     <button onclick="increaseQuantity(${item.id})">+</button>
                 </th>
                 <th>
                 <button class="btn btn-danger" role="button" onclick="removeCart(${item.id})">Xóa khỏi giỏ hàng</button>
                 </th>
                 `;
-                tbody.appendChild(tr);
+                    tbody.appendChild(tr);
+                }
+
+                const total = document.getElementById('total');
+                total.innerHTML = `Tổng tiền: ${calTototalCart(cart)}`;
+                renderCount(cart);
             }
 
-            const total = document.getElementById('total');
-            total.innerHTML = `Tổng tiền: ${calTototalCart(cart)}`;
-            renderCount(cart);
-        }
-
-        async function removeCart(id) {
-            const {
-                data
-            } = await axios.post(@json(route('cart.delete')), {
-                '_method': 'DELETE',
-                id,
-            });
-
-            Swal.fire({
-                title: 'Xóa thành công',
-                icon: 'success',
-            });
-
-            renderCartItems(data);
-        }
+            async function removeCart(id) {
+                const {
+                    isConfirmed
+                } = await Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa không?',
+                    text: "Bạn sẽ không thể khôi phục lại dữ liệu này!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Có, xóa nó!'
+                })
 
 
-        async function decreaseQuantity(id) {
-            const {
-                data
-            } = await axios.post(@json(route('cart.decrease')), {
-                '_method': 'PATCH',
-                id,
-            });
-            renderCartItems(data);
-        }
+                if (!isConfirmed) {
+                    return;
+                }
 
-        async function increaseQuantity(id) {
-            const {
-                data
-            } = await axios.post(@json(route('cart.increase')), {
-                '_method': 'PATCH',
-                id,
-            });
+                const {
+                    data
+                } = await axios.post(@json(route('cart.delete')), {
+                    '_method': 'DELETE',
+                    id,
+                });
 
-            renderCartItems(data);
-        }
 
-        renderCartItems(@json(Session::get('cart', [])));
-    </script>
+                Swal.fire({
+                    title: 'Xóa thành công',
+                    icon: 'success',
+                });
+
+                renderCartItems(data);
+            }
+
+
+            async function decreaseQuantity(id) {
+                const {
+                    data
+                } = await axios.post(@json(route('cart.decrease')), {
+                    '_method': 'PATCH',
+                    id,
+                });
+                renderCartItems(data);
+            }
+
+            async function increaseQuantity(id) {
+                const {
+                    data
+                } = await axios.post(@json(route('cart.increase')), {
+                    '_method': 'PATCH',
+                    id,
+                });
+
+                renderCartItems(data);
+            }
+
+            renderCartItems(@json(Session::get('cart', [])));
+        </script>
 </body>
 
 </html>

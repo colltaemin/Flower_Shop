@@ -313,6 +313,240 @@
 
     </x-header>
 
+    <div class="wrapper">
+
+        <div class="container">
+
+            <div class="col-12 row">
+                <div class="col-md-12" style="text-align: left">
+                    <form action="{{ route('orders.store') }} " method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="person-buy">
+                            <h5>Thông tin người mua</h5>
+
+                            <div class="row m-2">
+                                <div class="col-3 m-1">
+                                    <label>
+                                        <span class="req">*</span>Họ và tên:
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
+                                        aria-label="default input example" name="name_buy">
+
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-3 m-1">
+                                    <label>
+                                        <span class="req">*</span>Số điện thoại:
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" placeholder="Vui lòng nhập số điện thoại"
+                                        aria-label="default input example" name="phone_buy">
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-3 m-1">
+                                    <label>
+                                        <span class="req">*</span>Email:
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" placeholder="Vui lòng nhập email"
+                                        aria-label="default input example" name="email">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="person-take">
+                            <h5>Thông tin người nhận</h5>
+                            <div class="form">
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Họ và tên:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
+                                            aria-label="default input example" name="name">
+                                    </div>
+
+                                </div>
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Số điện thoại:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input class="form-control" type="text"
+                                            placeholder="Vui lòng nhập số điện thoại" aria-label="default input example"
+                                            name="phone">
+                                    </div>
+
+                                </div>
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Địa chỉ:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input class="form-control" type="text" placeholder="Vui lòng nhập địa chỉ"
+                                            aria-label="default input example" name="address">
+                                    </div>
+
+                                </div>
+
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Tỉnh/thành phố:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+
+                                        <select class="form-select" aria-label="Default select example" name="province">
+                                            <option selected>Thành phố Hồ Chí Minh</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Quận/Huyện:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+
+                                        <select class="form-select" aria-label="Default select example" name="district">
+                                            <option selected>Quận</option>
+                                            <option>Quận 1</option>
+                                            <option>Quận 2</option>
+                                            <option>Quận 3</option>
+                                            <option>Quận 4</option>
+                                            <option>Quận 5</option>
+                                            <option>Quận 6</option>
+                                            <option>Quận 7</option>
+                                            <option>Quận 8</option>
+                                            <option>Quận 9</option>
+                                            <option>Quận 10</option>
+                                            <option>Quận 11</option>
+                                            <option>Quận 12</option>
+                                            <option>Quận Tân Bình</option>
+                                            <option>Quận Phú Nhuận</option>
+                                            <option>Quận Gò Vấp</option>
+                                            <option>Quận Bình Thạnh</option>
+                                            <option>Quận Tân Phú</option>
+                                            <option>Quận Thủ Đức</option>
+                                            <option>Quận Bình Tân</option>
+                                            <option>Quận Hóc Môn</option>
+                                            <option>Quận Bình Chánh</option>
+                                            <option>Quận Nhà Bè</option>
+                                            <option>Quận Củ Chi</option>
+                                            <option>Quận Cần Giờ</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="messager">
+                            <h5>Giao nhận và thông điệp</h5>
+
+                            <div>
+                                <div class="row">
+                                    <div class="col-5 m-1">
+                                        <label>
+                                            <span class="req">*</span>Chọn ngày giao hàng:
+                                        </label>
+                                    </div>
+                                    <div class="col-6 date">
+                                        <input type="date" name="shipped_at">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <Strong>Lời nhắn [Cho người nhận]</Strong>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="2" name="message"></textarea>
+                            </div>
+                            <Strong>Lời nhắn [Cho shop]</Strong>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="2" name="note"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="infor-pro">
+                            <h5>Thông tin sản phẩm</h5>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Số lượng</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-items">
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong id='total'></strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="payment">
+                            <h5>Phương thức thanh toán</h5>
+                            <div class="form">
+                                <div class="row m-2">
+                                    <div class="col-3 m-1">
+                                        <label>
+                                            <span class="req">*</span>Chọn phương thức thanh toán:
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+
+                                        <select name="paid_at" class="form-select"
+                                            aria-label="Default select example">
+                                            <option selected>Thanh toán khi nhận hàng</option>
+                                            <option selected>Momo</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="confirm-pro">
+                            <button type="submit" class="btn btn-primary" id="btn-confirm"
+                                onclick="removeItem()">Xác nhận đơn hàng</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <x-footer>
+
+    </x-footer>
+
     <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -320,9 +554,49 @@
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
 
-    <script src="{{ asset('admins/product/index/list.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')
+    <script>
+        function calTototalCart(cart) {
+            let total = 0;
+            for (const key in cart) {
+                const item = cart[key];
+
+                total += item.price * item.quantity;
+            }
+
+            return total;
+        }
+
+        function renderCartItems(cart) {
+
+            const tbody = document.getElementById('cart-items');
+            tbody.innerHTML = '';
+            for (const key in cart) {
+                const item = cart[key];
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+
+                <th scope="col">${item.name}</th>
+                <th scope="col">${item.price}</th>
+                <th scope="col">${item.quantity}</th>
+
+
+                <th>
+
+                </th>
+                `;
+                tbody.appendChild(tr);
+            }
+            const total = document.getElementById('total');
+            total.innerHTML = `Tổng tiền: ${calTototalCart(cart)}`;
+        }
+
+
+
+        renderCartItems(@json(Session::get('cart', [])));
+    </script>
+    <script></script>
 </body>
 
 </html>

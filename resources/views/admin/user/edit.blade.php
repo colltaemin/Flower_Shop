@@ -45,17 +45,16 @@
                                         </div> --}}
 
                                 </div>
-
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label>Password</label>
                                     <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu">
 
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                             @error('price')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
-                                        </div> --}}
-                                </div>
+                                        </div>
+                                </div> --}}
 
                                 {{-- add role --}}
                                 <div class="form-group col-md-6">

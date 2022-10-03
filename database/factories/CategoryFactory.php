@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'featured_image' => $this->faker->imageUrl(),
         ];
     }
 }

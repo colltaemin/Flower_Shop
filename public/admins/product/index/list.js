@@ -1,47 +1,39 @@
-
-
-function actionDelete(event) {
-    event.preventDefault();
-    let urlRequest = $(this).data('url');
-    let that = $(this);
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+$(function() {
+  $('.btn-danger').click(function(e) {
+      e.preventDefault();
+      let urlRequest = $(this).data('url');
+      let that = $(this);
+      Swal.fire({
+          title: 'Bạn có chắc chắn muốn xóa không?',
+          text: "Bạn sẽ không thể khôi phục lại dữ liệu này!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Có, xóa nó!'
       }).then((result) => {
-        if (result.value) {
-        //   Swal.fire(
-        //     'Deleted!',
-        //     'Your file has been deleted.',
-        //     'success'
-        //   )
-            $.ajax({
-                type: 'GET',
-                url: urlRequest,
-                success: function(data) {
-                    if(data.code == 200) {
-                        that.parent().parent().remove();
-                    }
-                }
-            },
+          if (result.isConfirmed) {
+              $.ajax({
+                  type: "GET",
+                  url: urlRequest,
+                  success: function(data) {
+                      if (data.code == 200) {
+                          that.parent().parent().remove();
+                          Swal.fire(
+                              'Đã xóa!',
+                              'Dữ liệu của bạn đã bị xóa.',
+                              'success'
+                          ).then(()=>{
+                            location.reload();
+                            })
+                                
+                      }
+                  },
+                  error: function() {
 
-            ); 
-              Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-            ).then(()=>{
-              location.reload();
-            })
-                
-            
-        }
-        })
-}
-$( function() {
-    $(document).on( 'click', '.delete', actionDelete);
-} );
+                  }
+              });
+          }
+      })
+  })
+})

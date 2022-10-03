@@ -319,20 +319,26 @@
 
                 <div class="col-12 row">
                     <div style="text-align: left">
+                        <span>Danh mục</span>
+                        <span></span>
+                    </div>
+                    <div style="text-align: left">
                         <span>Tìm kiếm</span>
-                        <a class="search" href="">GIÁ TỪ THẤP TỚI CAO</a>
-                        <a class="search"href="">GIÁ TỪ CAO TỚI THẤP</a>
+                        <a class="search" href="#">GIÁ TỪ THẤP TỚI CAO</a>
+                        <a class="search"href="#">GIÁ TỪ CAO TỚI THẤP</a>
 
                     </div>
                     @foreach ($products as $product)
-                        <div class="item col-md-3 relative justify-center">
+                        <div class="item col-md-2 relative justify-center">
                             <div class="card" style="text-align: center">
-                                <a href="">
-                                    <img class="" src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
+                                <a href="{{ route('product', [$product]) }}">
+                                    <img class="" src="../images/13262_tinh-dau-tho-ngay.jpg"
+                                        alt="Card image cap">
                                 </a>
 
                                 <div class="card-body">
-                                    <a class="card-text">{{ $product->name }}</a>
+                                    <a href="{{ route('product', [$product]) }}"
+                                        class="card-text">{{ $product->name }}</a>
                                     <div>
                                         <span>{{ $product->price }} đ</span>
                                     </div>

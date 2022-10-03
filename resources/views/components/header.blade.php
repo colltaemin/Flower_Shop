@@ -42,7 +42,7 @@
                     </li>
 
                     <li class="nav-item p-1">
-                        <div><a href="{{ route('carts') }}"class="nav-link">
+                        <div><a href="{{ route('carts') }}"class="nav-link" id="bag">
                                 <img src="../images/shopping-bag.png" alt="">
                                 <span id="count"></span>
                             </a>
@@ -56,7 +56,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ Auth::user()->name }}
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
@@ -67,6 +67,7 @@
                                                 {{ __('Log Out') }}
                                             </x-dropdown-link>
                                         </form>
+                                        <a href="{{ route('orderDetail') }}">Đơn hàng của tôi</a>
                                     </li>
                                 </ul>
                             @else
@@ -86,15 +87,36 @@
 </header>
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        const bag = document.getElementById('bag');
+        bag.addEventListener('click', function(e) {
+            const count = document.getElementById('count');
+            if (!count.innerHTML) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Giỏ hàng trống!',
+                })
+                return false;
+            }
+        })
+
         function renderCount(cart) {
             const count = document.getElementById('count');
             let quantity = 0;
             for (const key in cart) {
                 quantity += 1;
             }
-            count.innerHTML = quantity;
+            if (quantity > 0) {
+                count.innerHTML = quantity;
+            } else {
+                count.innerHTML = '';
+            }
+
         }
+
         renderCount(@json(Session::get('cart', [])));
     </script>
 @endsection

@@ -65,4 +65,9 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'user_id', 'id', 'content');
+    }
 }

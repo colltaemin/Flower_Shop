@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -33,23 +34,29 @@ Route::get('/theme', fn () => view('pages.theme'))->name('theme');
 Route::get(
     '/carts',
     function () {
-    $products = [];
-    $carts = Session::get('cart', []);
-    foreach ($carts as $cart) {
-        $products = array_merge($products, [Product::findOrFail($cart['id'])]);
-    }
+        $products = [];
+        $carts = Session::get('cart', []);
+        foreach ($carts as $cart) {
+            $products = array_merge($products, [Product::findOrFail($cart['id'])]);
+        }
 
-    return view('pages.carts', compact('products'));
-}
+        return view('pages.carts', compact('products'));
+    }
 )->name('carts');
 
 Route::get('/order', fn () => view('pages.order'))->name('order');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/theme', [HomeController::class, 'theme'])->name('theme');
+Route::get('/category/{id}', [HomeController::class, 'category'])->name('category');
 
 Route::get('/product/{product}', [HomeController::class, 'product'])->name('product');
+
+Route::get('/orderDetail', [HomeController::class, 'orderDetail'])->name('orderDetail');
+
+Route::get('/sendMail', [MailController::class, 'sendMail'])->name('sendMail');
+
+Route::post('/rating{id}', [HomeController::class, 'rating'])->name('rating')->middleware('auth');
 
 Route::prefix('admin')->group(function (): void {
     Route::prefix('categories')->group(function (): void {
@@ -86,6 +93,7 @@ Route::prefix('admin')->group(function (): void {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete')->middleware('can:delete-user');
+        Route::post('/rating', [UserController::class, 'rating'])->name('users.rating')->middleware('auth');
     });
 
     Route::prefix('roles')->group(function (): void {
@@ -95,6 +103,11 @@ Route::prefix('admin')->group(function (): void {
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
         Route::post('/update/{id}', [RoleController::class, 'update'])->name('roles.update');
         Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('roles.delete');
+    });
+
+    Route::prefix('orderDetails')->group(function (): void {
+        Route::get('/', [OrderController::class, 'index'])->name('orderDetails.index');
+        Route::get('/delete/{id}', [OrderController::class, 'delete'])->name('orderDetails.delete');
     });
 });
 
@@ -106,6 +119,10 @@ Route::prefix('cart')->controller(CartController::class)->name('cart.')->group(f
     Route::delete('', 'removeProduct')->name('delete');
     Route::patch('increase', 'increaseQuantity')->name('increase');
     Route::patch('decrease', 'decreaseQuantity')->name('decrease');
+});
+
+Route::prefix('orders')->group(function (): void {
+    Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
 });
 
 require __DIR__.'/auth.php';

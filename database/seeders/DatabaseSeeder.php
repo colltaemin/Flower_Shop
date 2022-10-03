@@ -152,26 +152,32 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Category::factory(1)->create([
             'name' => 'Hoa Sinh Nhật',
+            'featured_image' => '../images/icon-hoa-sinh-nhat.png',
         ]);
 
         \App\Models\Category::factory(1)->create([
-            'name' => 'Hoa Khai Trương',
+            'name' => 'Cây Văn Phòng',
+            'featured_image' => '../images/icon-cay-vp.png',
         ]);
 
         \App\Models\Category::factory(1)->create([
             'name' => 'Hoa Chúc Mừng',
+            'featured_image' => '../images/icon-hoa-chuc-mung.png',
         ]);
 
         \App\Models\Category::factory(1)->create([
             'name' => 'Hoa Chia Buồn',
+            'featured_image' => '../images/icon-hoa-tang-le.png',
         ]);
 
         \App\Models\Category::factory(1)->create([
             'name' => 'Hoa Tình Yêu',
+            'featured_image' => '../images/icon-hoa-tinh-yeu.png',
         ]);
 
         \App\Models\Category::factory(1)->create([
             'name' => 'Hoa Mừng Tốt Nghiệp',
+            'featured_image' => '../images/icon-mau-hoa-moi.png',
         ]);
     }
 }

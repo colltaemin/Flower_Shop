@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        $users = User::orderBy('created_at', 'desc')->paginate(12);
 
         return view('admin.user.index', compact('users'));
     }
@@ -97,5 +98,27 @@ class UserController extends Controller
                 'message' => 'fail',
             ], 500);
         }
+    }
+
+    public function rating(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $ratings = Rating::create([
+                'user_id' => $request->user_id,
+                'product_id' => $request->product_id,
+                'rating' => $request->number_rating,
+                'content' => $request->content,
+                'name' => $request->name,
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+
+        return redirect()->back()->with('success', 'Rating created successfully');
     }
 }

@@ -39,11 +39,10 @@
                                             </a>
                                             <a href=""
                                                 data-url="{{ route('categories.delete', ['id' => $category->id]) }}"
-                                                class="btn btn-danger btn-sm delete">
+                                                class="btn btn-danger btn-sm" href="#">
                                                 <i class="fas fa-trash">
                                                 </i>
                                                 Delete
-                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -65,6 +64,53 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('admins/product/index/list.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(function() {
+            $('.btn-danger').click(function(e) {
+                e.preventDefault();
+                let urlRequest = $(this).data('url');
+                let that = $(this);
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa không?',
+                    text: "Bạn sẽ không thể khôi phục lại dữ liệu này!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Có, xóa nó!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: urlRequest,
+                            success: function(data) {
+                                if (data.code == 200) {
+                                    that.parent().parent().remove();
+                                    Swal.fire(
+                                        'Đã xóa!',
+                                        'Dữ liệu của bạn đã bị xóa.',
+                                        'success'
+                                    ).then(() => {
+                                        location.reload();
+                                    })
+
+                                } else {
+                                    Swal.fire(
+                                        'Đã hủy!',
+                                        'Không thể xóa vì danh mục có chứa sản phẩm, vui lòng xóa hết sản phẩm trrong danh mục và thử lại.',
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function() {
+
+                            }
+                        });
+                    }
+                })
+            })
+        })
+    </script>
 @endsection

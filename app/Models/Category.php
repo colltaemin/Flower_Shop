@@ -12,7 +12,7 @@ class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name', 'parent_id', 'feature_image_path'];
+    protected $fillable = ['name', 'parent_id'];
     protected $table = 'categories';
 
     public function products()

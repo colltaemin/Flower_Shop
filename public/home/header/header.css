@@ -57,6 +57,109 @@ header {
    max-width: 25rem;
    font-size: 13px;
 }
+.req{
+   color: red;
+}
+
+.form{
+   margin-top: 10px;
+}
+
+.person-buy{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+}
+
+.person-take{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+}
+
+.messager{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+}
+
+.payment
+{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+}
+
+.date{
+   width: 50%;
+}
+
+.infor-pro{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+   text-align: left;
+}
+
+.confirm-pro{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+   text-align: center;
+}
+.confirm-pro a{
+   color: white;
+  width: 80%;
+   
+   text-decoration: none;
+}
+
+.confirm-pro h5{
+   border-bottom: 1px solid rgb(235, 229, 229);
+}
+
+.offer{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+   text-align: left;
+}
+
+.dropdown:hover .dropdown-menu
+{  
+   display: block;
+   
+}
+.dropdown:hover .dropdown-menu
+{  
+   background-color: #68adbe;
+}
+
+.rate{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+  
+}
+
+.comment{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+   text-align: left;
+}
 
 
+
+.star{
+   border-bottom: 2px solid rgb(235, 229, 229);;
+}
 

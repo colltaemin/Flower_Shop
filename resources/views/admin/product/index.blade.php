@@ -26,7 +26,7 @@
                                     <th scope="col">Giá</th>
                                     <th scope="col">Hình ảnh</th>
                                     <th scope="col">Danh mục sản phẩm</th>
-                                    <th scope="col">Ngay tao</th>
+                                    <th scope="col">Ngày tạo</th>
                                     <th scope="col">Action</th>
 
                                 </tr>
@@ -81,5 +81,6 @@
 
 @section('js')
     <script src="{{ asset('admins/product/index/list.js') }}"></script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

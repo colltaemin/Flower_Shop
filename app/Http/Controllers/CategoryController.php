@@ -78,12 +78,15 @@ class CategoryController extends Controller
     public function delete($id)
     {
         try {
-            Category::find($id)->delete();
+            // category in product
+            if (Category::find($id)->products->count() <= 0) {
+                Category::find($id)->delete();
 
-            return response()->json([
-                'code' => 200,
-                'message' => 'success',
-            ], 200);
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'success',
+                ], 200);
+            }
         } catch (\Exception $e) {
             Log::error('message: '.$e->getMessage().' line: '.$e->getLine());
 
