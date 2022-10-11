@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Rating;
+use App\Models\Tag;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,15 @@ class HomeController extends Controller
 
         $products = Product::orderBy('created_at', 'desc')->paginate(30);
 
-        return view('pages.welcome', compact(['categories', 'products']));
+        $product_rate = Product::orderBy('rating', 'desc')->take(18)->get();
+        // search product by name
+
+        if ($key = request()->key) {
+            $products = Product::where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(30);
+            // search product by tag
+        }
+
+        return view('pages.welcome', compact(['categories', 'products', 'product_rate']));
     }
 
     public function category($id)
@@ -24,6 +33,9 @@ class HomeController extends Controller
         $categories = Category::all();
 
         $products = Product::where('category_id', $id)->paginate(18);
+        if ($key = request()->key) {
+            $products = Product::where('name', 'like', '%'.$key.'%')->where('category_id', $id)->orderBy('created_at', 'desc')->paginate(30);
+        }
 
         return view('pages.category', compact(['categories', 'products']));
     }

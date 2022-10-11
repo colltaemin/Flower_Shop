@@ -28,6 +28,11 @@ class OrderController extends Controller
 
             if (Customer::where('phone', $request->phone_buy)->exists()) {
                 $customers = Customer::where('phone', $request->phone_buy)->first();
+                // update customer
+                $customers->update([
+                    'name' => $request->name_buy,
+                    'email' => $request->email,
+                ]);
             } else {
                 $customers = Customer::create([
                     'name' => $request->name_buy,
@@ -56,33 +61,71 @@ class OrderController extends Controller
                     'product_id' => $key,
                     'product_name' => $value['name'],
                     'quantity' => $value['quantity'],
-                    'price' => $value['price'],
+                    'price' => $value['price'] * $value['quantity'],
                 ]);
             }
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
 
             throw $e;
         }
-        Mail::send('Mail.sendmail', compact('customers', 'order'), function ($email) use ($customers): void {
-            $email->to($customers->email, $customers->name);
-            $email->subject('Xác nhận đơn hàng');
-        });
-        Session::forget('cart');
+
+        if ('Thanh toán khi nhận hàng' === $request->paid_at) {
+            Mail::send('Mail.sendmail', compact('customers', 'order'), function ($email) use ($customers): void {
+                $email->to($customers->email, $customers->name);
+                $email->subject('Xác nhận đơn hàng');
+            });
+            Session::forget('cart');
+
+            return redirect()->route('home')->with('success', 'User created successfully');
+        }
+
+        if ('Thanh toán qua ví điện tử' === $request->paid_at) {
+            return redirect()->to(route('momo_payment'));
+        }
+    }
+
+    public function momoCheck(Request $request)
+    {
+        $resultCode = $request->get('resultCode');
+        if (0 === $resultCode) {
+            Session::forget('cart');
+
+            return redirect()->route('home')->with('success', 'User created successfully');
+        }
+
+        // delete order and orderflower in database
+        $order = Order::orderBy('id', 'desc')->first();
+        $order->delete();
 
         return redirect()->route('home')->with('success', 'User created successfully');
     }
 
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::paginate(10);
 
         $orderFlowers = OrderFlower::with('order')->get();
-
+        if ($key = request()->key) {
+            $orders = Order::where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(12);
+        }
         // dd($orderFlowers);
 
         return view('admin.order.index', compact('orders', 'orderFlowers'));
+    }
+
+    public function storeStatus(Request $request)
+    {
+        $order = Order::find($request->id);
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('success', 'Cập nhật thành công');
+    }
+
+    public function sendMail(): void
+    {
     }
 }

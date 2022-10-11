@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
@@ -17,6 +18,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(12);
+        if ($key = request()->key) {
+            $users = User::where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(12);
+        }
 
         return view('admin.user.index', compact('users'));
     }
@@ -104,12 +108,24 @@ class UserController extends Controller
     {
         try {
             DB::beginTransaction();
-            $ratings = Rating::create([
-                'user_id' => $request->user_id,
-                'product_id' => $request->product_id,
-                'rating' => $request->number_rating,
-                'content' => $request->content,
-                'name' => $request->name,
+            if (Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->exists()) {
+                Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->update([
+                    'rating' => $request->rating,
+                    'content' => $request->content,
+                ]);
+            } else {
+                Rating::create([
+                    'user_id' => $request->user_id,
+                    'product_id' => $request->product_id,
+                    'rating' => $request->rating,
+                    'content' => $request->content,
+                    'name' => $request->name,
+                ]);
+            }
+
+            $rate = Product::find($request->product_id);
+            $rate->update([
+                'rating' => $request->rating,
             ]);
 
             DB::commit();

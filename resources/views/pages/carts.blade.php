@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MyWebsite</title>
+    <title>Giỏ hàng</title>
     <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -330,6 +330,7 @@
 
                                     </tr>
                                 </thead>
+
                                 <tbody id="cart-items">
                                 </tbody>
                             </table>
@@ -393,6 +394,7 @@
 
             function renderCartItems(cart) {
                 const tbody = document.getElementById('cart-items');
+
                 tbody.innerHTML = '';
                 for (const key in cart) {
                     const item = cart[key];

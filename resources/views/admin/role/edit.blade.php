@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Thêm Role</title>
+    <title>Sửa Role</title>
 @endsection
 @section('css')
     <style>

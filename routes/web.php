@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -25,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/login', 'CheckLoginController@checkLogin');
 
-Route::get('/admin/home', fn () => view('home'))->name('admin.home')->middleware('auth');
+Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('index');
 
 Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
@@ -45,6 +47,8 @@ Route::get(
 )->name('carts');
 
 Route::get('/order', fn () => view('pages.order'))->name('order');
+
+Route::get('/momoCheck', [OrderController::class, 'momoCheck'])->name('momoCheck');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -123,6 +127,11 @@ Route::prefix('cart')->controller(CartController::class)->name('cart.')->group(f
 
 Route::prefix('orders')->group(function (): void {
     Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('/storeStatus', [OrderController::class, 'storeStatus'])->name('orders.storeStatus');
 });
+
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+
+Route::get('/momo_payment', [PaymentController::class, 'momo_payment'])->name('momo_payment');
 
 require __DIR__.'/auth.php';

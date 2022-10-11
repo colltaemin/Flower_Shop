@@ -37,6 +37,9 @@ class AdminProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->orderBy('created_at', 'desc')->paginate(10);
+        if ($key = request()->key) {
+            $products = Product::with('category')->where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(10);
+        }
 
         return view('admin.product.index', compact('products'));
     }

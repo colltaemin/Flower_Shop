@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Thêm Sản Phẩm</title>
+    <title>Sửa Sản Phẩm</title>
 @endsection
 @section('css')
     <link href="{{ asset('vendors/select2/select2.min.css') }}" rel="stylesheet" />

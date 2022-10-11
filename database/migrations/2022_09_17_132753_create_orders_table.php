@@ -26,6 +26,7 @@ return new class() extends Migration
             $table->string('district');
             $table->string('message');
             $table->string('paid_at')->nullable();
+            $table->string('status')->default('pending');
         });
     }
 

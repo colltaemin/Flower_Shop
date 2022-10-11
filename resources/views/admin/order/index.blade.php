@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang Chủ</title>
+    <title>Đơn hàng</title>
 @endsection
 
 @section('css')
@@ -39,9 +39,9 @@
                             <tbody>
                                 @foreach ($orders as $order)
                                     <tr>
-                                        <th scope="row">{{ $order->id }}</th>
+                                        <th class="col-0" scope="row">{{ $order->id }}</th>
 
-                                        <td>
+                                        <td class="col-1">
 
                                             @foreach ($order->orderFlowers as $orderFlower)
                                                 <span>{{ $orderFlower->product_name }} </span>
@@ -55,18 +55,19 @@
 
                                         </td>
 
-                                        <td>{{ number_format($order->orderFlowers->sum(fn($orderFlower) => $orderFlower->price)) }}
+                                        <td class="col-1">
+                                            {{ number_format($order->orderFlowers->sum(fn($orderFlower) => $orderFlower->price)) }}
                                             VNĐ
                                         </td>
 
-                                        <td>{{ $order->name }}</td>
-                                        <td>{{ $order->phone }}</td>
-                                        <td> {{ $order->address }} {{ $order->district }}</td>
-                                        <td>{{ $order->message }}</td>
-                                        <td>{{ $order->note }}</td>
-                                        <td>{{ $order->shipped_at }}</td>
-                                        <td>{{ $order->created_at->diffForHumans() }}</td>
-                                        <td>
+                                        <td class="col-1">{{ $order->name }}</td>
+                                        <td class="col-1">{{ $order->phone }}</td>
+                                        <td class="col-1"> {{ $order->address }} {{ $order->district }}</td>
+                                        <td class="col-1">{{ $order->message }}</td>
+                                        <td class="col-1">{{ $order->note }}</td>
+                                        <td class="col-1">{{ $order->shipped_at }}</td>
+                                        <td class="col-1">{{ $order->created_at->diffForHumans() }}</td>
+                                        <td class="col-1">
                                             @if ($order->paid_at == 'Thanh toán khi nhận hàng' || $order->paid_at == null)
                                                 <span class="badge badge-warning">Chưa thanh toán</span>
                                             @else
@@ -74,6 +75,17 @@
                                             @endif
                                         </td>
 
+                                        <td class="col-1" id="confirm_order">
+                                            <form action="{{ route('orders.storeStatus') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $order->id }}">
+                                                <input type="hidden" name="status" value="solved">
+                                                @if ($order->status == 'solved')
+                                                    <button type="submit" class="btn btn-success">Đã duyệt</button>
+                                                @else
+                                                    <button type="submit" class="btn btn-primary">Duyệt</button>
+                                                @endif
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -85,7 +97,7 @@
                         </table>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center">
-                        {{-- {{ $products->links('pagination::bootstrap-4') }} --}}
+                        {{ $orders->links('pagination::bootstrap-4') }}
                     </div>
 
                 </div>

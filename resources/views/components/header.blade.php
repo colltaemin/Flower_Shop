@@ -10,7 +10,7 @@
                         <a href="/" title="Shop hoa yêu thương"><img src="../images/logo-hoa-yeu-thuong.png"></a>
                     </li>
                     <li class="nav-item p-2">
-                        <a class="nav-link" href="#">Trang chủ</a>
+                        <a class="nav-link" href="/">Trang chủ</a>
                     </li>
 
                     <li class="nav-item dropdown p-2">
@@ -35,9 +35,16 @@
                     </li>
 
                     <li class="nav-item p-2">
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-4" type="search" placeholder="Search" aria-label="Search">
+                        <form action="" class="d-flex" role="form">
+                            <input class="form-control me-4 search_ajax" type="search" name="key"
+                                placeholder="Search" aria-label="Search">
+
                             <button class="btn btn-outline-success" type="submit">Search</button>
+                            <div>
+                                <ul class="list-group search_ajax_result" style="position: absolute; z-index: 9999;">
+
+                                </ul>
+                            </div>
                         </form>
                     </li>
 
@@ -87,6 +94,7 @@
 </header>
 
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const bag = document.getElementById('bag');
@@ -119,4 +127,5 @@
 
         renderCount(@json(Session::get('cart', [])));
     </script>
+    <script></script>
 @endsection

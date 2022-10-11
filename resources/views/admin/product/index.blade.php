@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang Chủ</title>
+    <title>Sản phẩm</title>
 @endsection
 
 @section('css')
@@ -14,7 +14,9 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+
                     <div class="col-md-12">
+
                         <a href="{{ route('products.create') }}" class="btn btn-success float-right m-2">Thêm Sản Phẩm</a>
                     </div>
                     <div class="col-md-12">

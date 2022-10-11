@@ -22,6 +22,9 @@ class MenuController extends Controller
     public function index()
     {
         $menus = $this->menu->paginate(5);
+        if ($key = request()->key) {
+            $menus = $this->menu->where('name', 'like', '%'.$key.'%')->latest()->paginate(5);
+        }
 
         return view('admin.menus.index', compact('menus'));
     }

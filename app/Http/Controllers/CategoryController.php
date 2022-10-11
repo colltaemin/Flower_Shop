@@ -35,6 +35,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->category->latest()->paginate(5);
+        if ($key = request()->key) {
+            $categories = $this->category->where('name', 'like', '%'.$key.'%')->latest()->paginate(5);
+        }
 
         return view('admin.category.index', compact('categories'));
     }

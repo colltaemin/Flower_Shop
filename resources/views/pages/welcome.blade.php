@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MyWebsite</title>
+    <title>Trang chủ</title>
     <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -313,6 +313,43 @@
     <x-header>
 
     </x-header>
+    <div class="container">
+        <div class="slider_show">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/P62ff2f312a2af5.69604601_banner-4.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/P633e9f013c2859.82701453_1355x432 copy.jpg" class="d-block w-100"
+                            alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/P62ff2f4e0abb80.16911720_banner-5.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
 
     <div class="wrapper-home">
 
@@ -326,12 +363,14 @@
                             MẪU HOA MỚI NĂM 2022
                         </span>
                         </h2> --}}
-                        <div class="row p-2">
+
+                        <div class="row category_item p-2">
 
                             @foreach ($categories as $category)
-                                <div class="col-md-2 justify-center">
-                                    <a href="{{ route('category', ['id' => $category->id]) }}"><img
-                                            src="{{ $category->featured_image }}"></a>
+                                <div class="col-md-2 image_category justify-center">
+                                    <a href="{{ route('category', ['id' => $category->id]) }}">
+                                        <figure><img src="{{ $category->featured_image }}"></figure>
+                                    </a>
                                     <a href="{{ route('category', ['id' => $category->id]) }}">{{ $category->name }}</a>
                                 </div>
                             @endforeach
@@ -344,10 +383,9 @@
             </div>
         </div>
     </div>
-
     <div class="wrapper-body">
         <h2><span title="Mẫu hoa mới năm 2022">
-                MẪU HOA MỚI NĂM 2022
+                ĐƯỢC ĐÁNH GIÁ TỐT NHẤT 2022
             </span>
         </h2>
         <div class="container">
@@ -356,12 +394,13 @@
 
                 <div class="col-md-12">
                     <div class="row">
-                        @foreach ($products as $product)
+                        @foreach ($product_rate as $product)
                             <div class="item col-md-2 relative justify-center">
-                                <div class="card" style="text-align: center">
+                                <div class="card image_category" style="text-align: center ">
                                     <a href="{{ route('product', [$product]) }}">
-                                        <img class="" src="images/13262_tinh-dau-tho-ngay.jpg"
-                                            alt="Card image cap">
+                                        <figure>
+                                            <img src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
+                                        </figure>
                                     </a>
 
                                     <div class="card-body">
@@ -376,13 +415,48 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="col-md-12 d-flex justify-content-center m-2">
-                    {{ $products->links('pagination::bootstrap-4') }}
-                </div>
+
             </div>
         </div>
+        <div class="wrapper-body">
+            <h2><span title="Mẫu hoa mới năm 2022">
+                    MẪU HOA MỚI NĂM 2022
+                </span>
+            </h2>
+            <div class="container">
 
-    </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            @foreach ($products as $product)
+                                <div class="item col-md-2 relative justify-center">
+                                    <div class="card image_category" style="text-align: center ">
+                                        <a href="{{ route('product', [$product]) }}">
+                                            <figure>
+                                                <img src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
+                                            </figure>
+                                        </a>
+
+                                        <div class="card-body">
+                                            <a href="{{ route('product', [$product]) }}"
+                                                class="card-text">{{ $product->name }}</a>
+                                            <div>
+                                                <span>{{ $product->price }} đ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center m-2">
+                        {{ $products->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 
@@ -394,6 +468,15 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
+    <script>
+        var myCarousel = document.querySelector('#carouselExampleIndicators')
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 2000,
+            wrap: false
+            carousel.to(0)
+        })
+        //quay lại slide đầu tiên
+    </script>
     @yield('js')
 
 </body>

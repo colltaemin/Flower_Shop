@@ -14,6 +14,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
+        if ($key = request()->key) {
+            $roles = Role::where('name', 'like', '%'.$key.'%')->get();
+        }
 
         return view('admin.role.index', compact('roles'));
     }

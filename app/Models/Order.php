@@ -21,6 +21,7 @@ class Order extends Model
         'message',
         'shipped_at',
         'paid_at',
+        'status',
     ];
 
     public function customer()

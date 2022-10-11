@@ -21,6 +21,7 @@ return new class() extends Migration
             $table->text('content')->nullable();
             $table->integer('category_id');
             $table->integer('user_id');
+            $table->double('rating')->default(0);
             $table->timestamps();
         });
     }
