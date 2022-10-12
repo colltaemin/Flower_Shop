@@ -317,74 +317,80 @@
     <div class="container mx-auto">
         <div class="wrapper">
             <h5 style="text-align: left">Đơn hàng của tôi</h5>
-            <div class="row">
+            <div class="row" id="order_show">
                 <div class="col-12">
 
                     @foreach ($orders as $order)
-                        <div class="order_list">
-                            <div class="row">
-                                <div class="col-8">
-                                    @foreach ($order->orderFlowers as $orderDetail)
-                                        <div class="product row">
+                        @if ($order->count() < 0)
+                            <div class="alert alert-danger" role="alert">
+                                Bạn chưa có đơn hàng nào
+                            </div>
+                        @else
+                            <div class="order_list">
+                                <div class="row">
+                                    <div class="col-8">
+                                        @foreach ($order->orderFlowers as $orderDetail)
+                                            <div class="product row">
 
-                                            <div class="detail col-4">
-                                                <div class="product-img">
+                                                <div class="detail col-4">
+                                                    <div class="product-img">
 
-                                                    <img src="{{ $orderDetail->product->feature_image_path }}"
-                                                        alt="" />
+                                                        <img src="{{ $orderDetail->product->feature_image_path }}"
+                                                            alt="" />
 
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <span>{{ $orderDetail->quantity }}</span>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="product-name">
+                                                        <span>
+                                                            {{ $orderDetail->product->name }}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        @endforeach
+                                    </div>
 
-                                            <div class="col-4">
-                                                <span>{{ $orderDetail->quantity }}</span>
+                                    <div class="col-4">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <span class="main-status">
+
+                                                    @if ($order->status == 'pending')
+                                                        <span class="badge bg-warning text-dark">Đang xử lý</span>
+                                                    @elseif($order->status == 'solved')
+                                                        <span class="badge bg-secondary">Đang giao hàng</span>
+                                                    @endif
+
+                                                </span>
                                             </div>
+                                            <div class="price col-6">
 
-                                            <div class="col-4">
-                                                <div class="product-name">
-                                                    <span>
-                                                        {{ $orderDetail->product->name }}
-                                                    </span>
+                                                <div class="total-money">
+                                                    <div class="title">Tổng tiền:</div>
+                                                    <div class="total">
+                                                        <span>{{ number_format($order->orderFlowers->sum(fn($orderFlower) => $orderFlower->price)) }}
+                                                            VNĐ
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-primary">Chi tiết</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
 
-                                <div class="col-4">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <span class="main-status">
-
-                                                @if ($order->status == 'pending')
-                                                    <span class="badge bg-warning text-dark">Đang xử lý</span>
-                                                @elseif($order->status == 'solved')
-                                                    <span class="badge bg-secondary">Đang giao hàng</span>
-                                                @endif
-
-                                            </span>
-                                        </div>
-                                        <div class="price col-6">
-
-                                            <div class="total-money">
-                                                <div class="title">Tổng tiền:</div>
-                                                <div class="total">
-                                                    <span>{{ number_format($order->orderFlowers->sum(fn($orderFlower) => $orderFlower->price)) }}
-                                                        VNĐ
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="">
-                                                <button class="btn btn-primary">Chi tiết</button>
-                                            </div>
-                                        </div>
                                     </div>
 
                                 </div>
 
                             </div>
-
-                        </div>
+                        @endif
                     @endforeach
                 </div>
 
@@ -403,6 +409,9 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
+    <script>
+        const order_show = document.getElementById('order_show');
+    </script>
     @yield('js')
 
 </body>

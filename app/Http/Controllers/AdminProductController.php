@@ -12,6 +12,7 @@ use App\Models\ProductTag;
 use App\Models\Tag;
 use App\Traits\StorageImageTrait;
 use App\View\Components\Recusive;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Log;
@@ -36,10 +37,24 @@ class AdminProductController extends Controller
 
     public function index()
     {
-        $products = Product::with('category')->orderBy('created_at', 'desc')->paginate(10);
-        if ($key = request()->key) {
-            $products = Product::with('category')->where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(10);
-        }
+        $products = Product::query()
+            ->when(request('key'), function (Builder $query, $search): void {
+            $query
+                ->whereFulltext('name', $search)
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhereFulltext('content', $search)
+                ->orWhere('content', 'like', "%{$search}%")
+                ->orWhereHas('category', function (Builder $query) use ($search): void {
+                $query
+                    ->where('name', $search)
+                    ->orWhere('name', 'like', "%{$search}%")
+                ;
+            })
+            ;
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(8)
+        ;
 
         return view('admin.product.index', compact('products'));
     }

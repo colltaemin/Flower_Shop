@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +18,18 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(12);
-        if ($key = request()->key) {
-            $users = User::where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(12);
-        }
+        $users = User::query()
+            ->when(request('key'), function (Builder $query, $search): void {
+            $query
+                ->where('name', $search)
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhere('email', $search)
+                ->orWhere('email', 'like', "%{$search}%")
+            ;
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(30)
+        ;
 
         return view('admin.user.index', compact('users'));
     }

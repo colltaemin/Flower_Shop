@@ -15,7 +15,7 @@
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label for="name" :value="__('Tên đăng nhập')" />
 
                 <x-input id="name" class="mt-1 block w-full" type="text" name="name" :value="old('name')" required
                     autofocus />
@@ -31,7 +31,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label for="password" :value="__('Mật khẩu')" />
 
                 <x-input id="password" class="mt-1 block w-full" type="password" name="password" required
                     autocomplete="new-password" />
@@ -39,7 +39,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label for="password_confirmation" :value="__('Xác nhận mật khẩu')" />
 
                 <x-input id="password_confirmation" class="mt-1 block w-full" type="password"
                     name="password_confirmation" required />
@@ -47,11 +47,11 @@
 
             <div class="mt-4 flex items-center justify-end">
                 <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Đã có tài khoản?') }}
                 </a>
 
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('Đăng kí') }}
                 </x-button>
             </div>
         </form>

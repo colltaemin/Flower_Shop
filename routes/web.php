@@ -129,6 +129,8 @@ Route::prefix('orders')->group(function (): void {
     Route::get('/listOrder', [OrderController::class, 'listOrder'])->name('orders.listOrder');
 });
 
+Route::get('/order-confirm', [OrderController::class, 'show'])->name('order-confrim');
+
 Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
 
 Route::get('/momo_payment', [PaymentController::class, 'momo_payment'])->name('momo_payment');

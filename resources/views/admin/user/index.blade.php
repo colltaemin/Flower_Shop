@@ -45,7 +45,7 @@
                                                 Edit
                                             </a>
                                             <a class="btn btn-danger btn-sm delete"
-                                                data-url="{{ route('users.delete', ['id' => $user->id]) }}" href="">
+                                                data-url="{{ route('users.delete', ['id' => $user->id]) }}" href="#">
                                                 <i class="fas fa-trash">
                                                 </i>
                                                 Delete

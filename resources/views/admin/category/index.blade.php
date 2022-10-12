@@ -99,7 +99,7 @@
                                 } else {
                                     Swal.fire(
                                         'Đã hủy!',
-                                        'Không thể xóa vì danh mục có chứa sản phẩm, vui lòng xóa hết sản phẩm trrong danh mục và thử lại.',
+                                        'Không thể xóa vì danh mục có chứa sản phẩm, vui lòng xóa hết sản phẩm trong danh mục và thử lại.',
                                         'error'
                                     )
                                 }

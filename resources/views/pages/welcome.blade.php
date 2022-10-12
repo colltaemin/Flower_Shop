@@ -383,6 +383,47 @@
             </div>
         </div>
     </div>
+
+    <div class="wrapper-body">
+        <h2><span title="Mẫu hoa mới năm 2022">
+                MẪU HOA MỚI NĂM 2022
+            </span>
+        </h2>
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="row">
+                        @foreach ($products as $product)
+                            <div class="item col-md-2 relative justify-center">
+                                <div class="card image_category" style="text-align: center ">
+                                    <a href="{{ route('product', [$product]) }}">
+                                        <figure>
+                                            <img src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
+                                        </figure>
+                                    </a>
+
+                                    <div class="card-body">
+                                        <a href="{{ route('product', [$product]) }}"
+                                            class="card-text">{{ $product->name }}</a>
+                                        <div>
+                                            <span>{{ $product->price }} đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-center m-2">
+                    {{ $products->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <div class="wrapper-body">
         <h2><span title="Mẫu hoa mới năm 2022">
                 ĐƯỢC ĐÁNH GIÁ TỐT NHẤT 2022
@@ -418,46 +459,6 @@
 
             </div>
         </div>
-        <div class="wrapper-body">
-            <h2><span title="Mẫu hoa mới năm 2022">
-                    MẪU HOA MỚI NĂM 2022
-                </span>
-            </h2>
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="row">
-                            @foreach ($products as $product)
-                                <div class="item col-md-2 relative justify-center">
-                                    <div class="card image_category" style="text-align: center ">
-                                        <a href="{{ route('product', [$product]) }}">
-                                            <figure>
-                                                <img src="images/13262_tinh-dau-tho-ngay.jpg" alt="Card image cap">
-                                            </figure>
-                                        </a>
-
-                                        <div class="card-body">
-                                            <a href="{{ route('product', [$product]) }}"
-                                                class="card-text">{{ $product->name }}</a>
-                                            <div>
-                                                <span>{{ $product->price }} đ</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="col-md-12 d-flex justify-content-center m-2">
-                        {{ $products->links('pagination::bootstrap-4') }}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
 
     <x-footer>

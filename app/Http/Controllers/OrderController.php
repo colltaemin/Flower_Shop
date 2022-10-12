@@ -8,6 +8,8 @@ use App\Http\Requests\OrderPostRequest;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderFlower;
+use Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
@@ -20,12 +22,12 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
-            if (Customer::where('phone', $request->phone_buy)->exists()) {
-                $customers = Customer::where('phone', $request->phone_buy)->first();
+            if (Customer::where('email', $request->email)->exists()) {
+                $customers = Customer::where('email', $request->email)->first();
                 // update customer
                 $customers->update([
                     'name' => $request->name_buy,
-                    'email' => $request->email,
+                    'phone' => $request->phone_buy,
                 ]);
             } else {
                 $customers = Customer::create([
@@ -73,7 +75,7 @@ class OrderController extends Controller
             });
             Session::forget('cart');
 
-            return redirect()->route('home')->with('success', 'User created successfully');
+            return redirect()->route('order-confrim')->with('success', 'User created successfully');
         }
 
         if ('Thanh toán qua ví điện tử' === $request->paid_at) {
@@ -87,7 +89,7 @@ class OrderController extends Controller
         if (0 === $resultCode) {
             Session::forget('cart');
 
-            return redirect()->route('home')->with('success', 'User created successfully');
+            return redirect()->route('order-confirm')->with('success', 'User created successfully');
         }
 
         // delete order and orderflower in database
@@ -99,13 +101,19 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::paginate(10);
-
         $orderFlowers = OrderFlower::with('order')->get();
-        if ($key = request()->key) {
-            $orders = Order::where('name', 'like', '%'.$key.'%')->orderBy('created_at', 'desc')->paginate(12);
-        }
-        // dd($orderFlowers);
+        $orders = Order::query()
+            ->when(request('key'), function (Builder $query, $search): void {
+            $query
+                ->where('name', $search)
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhere('phone', $search)
+                ->orWhere('phone', 'like', "%{$search}%")
+            ;
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(30)
+        ;
 
         return view('admin.order.index', compact('orders', 'orderFlowers'));
     }
@@ -126,10 +134,20 @@ class OrderController extends Controller
 
     public function listOrder()
     {
-        $orders = Order::all();
+        $orders = Auth::user()->customer?->orders;
+
+        if (! $orders) {
+            $orders = collect();
+        }
+
         $orderFlowers = OrderFlower::all();
         $productInOrder = OrderFlower::with('order')->get();
 
         return view('pages.orderlist', compact('orders', 'orderFlowers', 'productInOrder'));
+    }
+
+    public function show()
+    {
+        return view('pages.ordercustomer');
     }
 }

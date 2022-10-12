@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class, 'user_id', 'id', 'content');
     }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'email', 'email');
+    }
 }

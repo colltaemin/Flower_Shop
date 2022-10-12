@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sản phẩm theo danh mục</title>
+    <title>Thông tin đơn hàng</title>
     <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,7 +17,7 @@
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('home/header/header.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/body/body.css') }}">
     @yield('css')
     <!-- Styles -->
     <style>
@@ -312,58 +314,25 @@
 
     </x-header>
 
-    <div class="wrapper">
+    <div class="container mx-auto">
+        <div class="wrapper">
 
-        <div class="container">
             <div class="row">
-                <div style="text-align: left" class="col-2">
-                    <label for="">Sắp xếp theo</label>
-                    <form action="">
-                        @csrf
-                        <select name="sort" id="sort" class="form-control col-2">
-                            <option value="{{ Request::url() }}?sort_by=none">Mặc định</option>
-                            <option value="{{ Request::url() }}?sort_by=price_asc">Giá tăng dần</option>
-                            <option value="{{ Request::url() }}?sort_by=price_desc">Giá giảm dần</option>
-                            <option value="{{ Request::url() }}?sort_by=name_asc">Tên A-Z</option>
-                            <option value="{{ Request::url() }}?sort_by=name_desc">Tên Z-A</option>
+                <span>
+                    Đặt hàng thành công. Vui lòng kiểm tra email và đăng nhập bằng email mua hàng để xem chi tiết đơn
+                    hàng. Hoặc quay về trang chủ
+                </span>
 
-                        </select>
-                    </form>
-
-                </div>
-                <div class="col-12 row">
-                    <div style="text-align: left">
-
-                    </div>
-
-                    @foreach ($products as $product)
-                        <div class="item col-md-2 relative justify-center">
-                            <div class="card" style="text-align: center">
-                                <a href="{{ route('product', [$product]) }}">
-                                    <img class="" src="../images/13262_tinh-dau-tho-ngay.jpg"
-                                        alt="Card image cap">
-                                </a>
-
-                                <div class="card-body">
-                                    <a href="{{ route('product', [$product]) }}"
-                                        class="card-text">{{ $product->name }}</a>
-                                    <div>
-                                        <span>{{ $product->price }} đ</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="col-md-12 d-flex justify-content-center m-3">
-                        {{ $products->links('pagination::bootstrap-4') }}
-                    </div>
-                </div>
+                <a href="{{ route('login') }}">Đăng nhập</a>
+                <a href="/">Quay về trang chủ</a>
             </div>
+
         </div>
-    </div>
 
     </div>
 
+    </div>
+    </div>
     <x-footer>
 
     </x-footer>
@@ -372,17 +341,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/849f1570d8.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#sort').change(function() {
-                var url = $(this).val();
-                if (url) {
-                    window.location = url;
-                }
-                return false;
-            });
-        });
+        const order_show = document.getElementById('order_show');
     </script>
     @yield('js')
 

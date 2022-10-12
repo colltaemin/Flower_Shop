@@ -367,7 +367,7 @@
                                     <input class="form-control" type="email" placeholder="Vui lòng nhập email"
                                         aria-label="default input example" name="email"
                                         @error('email') is-invalid @enderror>
-                                    <label for="" data-invalid="Email không hợp lệ"
+                                    <label for="" class="m-2" data-invalid="Email không hợp lệ"
                                         data-valid="Email hợp lệ"></label>
                                     </label>
 

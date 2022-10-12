@@ -41,8 +41,8 @@
                                         <td>{{ $product->name }}</td>
                                         <td>{{ number_format($product->price) }} VND</td>
                                         <td>
-                                            <img class="product_image_150_100" src="{{ $product->feature_image_path }}"
-                                                alt="">
+                                            <img class="product_image_150_100" style="height: 70px; width: 70px;"
+                                                src="{{ $product->feature_image_path }}" alt="">
                                         </td>
                                         <td>{{ optional($product->category)->name }}</td>
                                         <td>{{ $product->created_at->diffForHumans() }}</td>

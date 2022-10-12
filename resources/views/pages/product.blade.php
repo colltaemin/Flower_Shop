@@ -393,9 +393,8 @@
                                 <div class="col-md-12">
                                     <strong>{{ $rating_item->user->name }}</strong>
                                 </div>
-                                <div id="rateYo2" class="">
-                                    <input class="form-control" type="hidden" name="rate"
-                                        value="{{ $rating_item->rating }}">
+                                <div class="rateYo2">
+                                    <input class="form-control" type="hidden" value="{{ $rating_item->rating }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <p>{{ $rating_item->content }}</p>
@@ -500,14 +499,13 @@
             </script>
             <script>
                 $(function() {
-                    let rate_item = $("#rateYo2 input").val();
-                    $("#rateYo2").rateYo({
-                        rating: rate_item,
-
-
-                        normarlizedFill: '#FF0000',
-
-                        starWidth: "20px",
+                    $(".rateYo2 input").each(function() {
+                        let rate = $(this).val();
+                        $(this.parentElement).rateYo({
+                            rating: rate,
+                            normarlizedFill: '#FF0000',
+                            starWidth: "20px",
+                        });
                     });
                 });
             </script>

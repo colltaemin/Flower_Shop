@@ -35,11 +35,11 @@
                     </li>
 
                     <li class="nav-item p-2">
-                        <form action="" class="d-flex" role="form">
+                        <form action="/" class="d-flex" role="form">
                             <input class="form-control me-4 search_ajax" type="search" name="key"
-                                placeholder="Search" aria-label="Search">
+                                placeholder="Tìm kiếm" aria-label="Search">
 
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success" type="submit">Tìm</button>
                             <div>
                                 <ul class="list-group search_ajax_result" style="position: absolute; z-index: 9999;">
 
@@ -77,7 +77,7 @@
 
                                     </li>
                                     <li> <a href="{{ route('orders.listOrder') }}">Đơn hàng của tôi</a></li>
-                                    <li><a href="{{ route('') }}">Thông tin của tôi</a></li>
+                                    {{-- <li><a href="{{ route('') }}">Thông tin của tôi</a></li> --}}
                                 </ul>
                             @else
                                 <a href="{{ route('login') }}" class="nav-link">
