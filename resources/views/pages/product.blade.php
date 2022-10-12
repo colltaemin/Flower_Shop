@@ -323,6 +323,9 @@
                 <form action="{{ route('users.rating') }}" method="post">
                     @csrf
                     <input class="form-control" type="hidden" name="rating" id="rating">
+                    @error('rating')
+                        <div class="text-danger">Vui lòng chọn số sao</div>
+                    @enderror
                     <input class="form-control" type="hidden" name="product_id" id=""
                         value="{{ $product->id }}">
                     {{-- input user_id --}}
@@ -333,7 +336,9 @@
                             value="{{ Auth::user()->name }}">
                     @endif
                     <input class="form-control" type="" name="content" id="" placeholder="Nhận xét">
-
+                    @error('content')
+                        <div class="text-danger">Vui lòng nhập đánh giá</div>
+                    @enderror
                     <button type="submit" class="btn btn-primary m-2">Gửi đánh
                         giá</button>
                 </form>

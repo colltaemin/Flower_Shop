@@ -20,11 +20,11 @@ return new class() extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('name');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamp('shipped_at');
             $table->string('province');
             $table->string('district');
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->string('paid_at')->nullable();
             $table->string('status')->default('pending');
         });

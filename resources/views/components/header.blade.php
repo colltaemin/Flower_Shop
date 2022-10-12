@@ -74,8 +74,10 @@
                                                 {{ __('Log Out') }}
                                             </x-dropdown-link>
                                         </form>
-                                        <a href="{{ route('orderDetail') }}">Đơn hàng của tôi</a>
+
                                     </li>
+                                    <li> <a href="{{ route('orders.listOrder') }}">Đơn hàng của tôi</a></li>
+                                    <li><a href="{{ route('') }}">Thông tin của tôi</a></li>
                                 </ul>
                             @else
                                 <a href="{{ route('login') }}" class="nav-link">

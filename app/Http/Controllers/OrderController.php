@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderPostRequest;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderFlower;
@@ -14,15 +15,8 @@ use Session;
 
 class OrderController extends Controller
 {
-    public function store(Request $request)
+    public function store(OrderPostRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-            'phone' => 'required',
-        ]);
-
         try {
             DB::beginTransaction();
 
@@ -64,6 +58,7 @@ class OrderController extends Controller
                     'price' => $value['price'] * $value['quantity'],
                 ]);
             }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -127,5 +122,14 @@ class OrderController extends Controller
 
     public function sendMail(): void
     {
+    }
+
+    public function listOrder()
+    {
+        $orders = Order::all();
+        $orderFlowers = OrderFlower::all();
+        $productInOrder = OrderFlower::with('order')->get();
+
+        return view('pages.orderlist', compact('orders', 'orderFlowers', 'productInOrder'));
     }
 }

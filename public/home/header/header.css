@@ -197,4 +197,34 @@ header {
    border-radius: 5px;
 }
 
+input:placeholder-shown ~ label::before{
+   content: attr(data-empty);
+   color: red;
+}
+
+input:not(:placeholder-shown) ~ label::before{
+   content: attr(data-valid);
+   color: green;
+}
+
+input:invalid ~ label::before{
+   content: attr(data-invalid);
+   color: red;
+}
+
+.product-img img{
+   height: 80px;
+   width: 80px;
+
+}
+
+.order_list{
+   border: 2px solid rgb(235, 229, 229);
+   border-radius: 5px;
+   padding: 10px;
+   margin-top: 10px;
+   text-align: left;
+
+}
+
 

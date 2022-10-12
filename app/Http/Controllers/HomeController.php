@@ -51,9 +51,4 @@ class HomeController extends Controller
 
         return view('pages.product', compact(['product'], ['productsInCategory'], ['ratingAvg'], ['contents'], ['name'], ['ratings']));
     }
-
-    public function orderDetail()
-    {
-        return view('pages.orderlist');
-    }
 }

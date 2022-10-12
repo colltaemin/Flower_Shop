@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     protected $fillable = [
         'customer_id',
         'name',

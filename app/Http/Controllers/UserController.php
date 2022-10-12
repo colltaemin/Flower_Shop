@@ -106,6 +106,11 @@ class UserController extends Controller
 
     public function rating(Request $request)
     {
+        $request->validate([
+            'rating' => 'required',
+            'content' => 'required',
+        ]);
+
         try {
             DB::beginTransaction();
             if (Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->exists()) {
@@ -136,5 +141,10 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('success', 'Rating created successfully');
+    }
+
+    public function inUser()
+    {
+        return view('pages.inforuser');
     }
 }

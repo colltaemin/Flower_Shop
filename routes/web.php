@@ -56,8 +56,6 @@ Route::get('/category/{id}', [HomeController::class, 'category'])->name('categor
 
 Route::get('/product/{product}', [HomeController::class, 'product'])->name('product');
 
-Route::get('/orderDetail', [HomeController::class, 'orderDetail'])->name('orderDetail');
-
 Route::get('/sendMail', [MailController::class, 'sendMail'])->name('sendMail');
 
 Route::post('/rating{id}', [HomeController::class, 'rating'])->name('rating')->middleware('auth');
@@ -128,6 +126,7 @@ Route::prefix('cart')->controller(CartController::class)->name('cart.')->group(f
 Route::prefix('orders')->group(function (): void {
     Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/storeStatus', [OrderController::class, 'storeStatus'])->name('orders.storeStatus');
+    Route::get('/listOrder', [OrderController::class, 'listOrder'])->name('orders.listOrder');
 });
 
 Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');

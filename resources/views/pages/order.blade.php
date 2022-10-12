@@ -319,7 +319,7 @@
 
             <div class="col-12 row">
                 <div class="col-md-12" style="text-align: left">
-                    <form action="{{ route('orders.store') }} " method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('orders.store') }} " method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="person-buy">
                             <h5>Thông tin người mua</h5>
@@ -332,8 +332,13 @@
                                 </div>
                                 <div class="col-8">
                                     <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
-                                        aria-label="default input example" name="name_buy">
+                                        aria-label="default input example" name="name_buy"
+                                        @error('name_buy') is-invalid @enderror>
 
+                                    </label>
+                                    @error('name_buy')
+                                        <div class="text-danger m-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row m-2">
@@ -343,8 +348,13 @@
                                     </label>
                                 </div>
                                 <div class="col-8">
-                                    <input class="form-control" type="text" placeholder="Vui lòng nhập số điện thoại"
-                                        aria-label="default input example" name="phone_buy">
+                                    <input class="form-control" type="number" placeholder="Vui lòng nhập số điện thoại"
+                                        aria-label="default input example" name="phone_buy"
+                                        @error('phone_buy') is-invalid @enderror>
+
+                                    @error('phone_buy')
+                                        <div class="text-danger m-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row m-2">
@@ -354,8 +364,16 @@
                                     </label>
                                 </div>
                                 <div class="col-8">
-                                    <input class="form-control" type="text" placeholder="Vui lòng nhập email"
-                                        aria-label="default input example" name="email">
+                                    <input class="form-control" type="email" placeholder="Vui lòng nhập email"
+                                        aria-label="default input example" name="email"
+                                        @error('email') is-invalid @enderror>
+                                    <label for="" data-invalid="Email không hợp lệ"
+                                        data-valid="Email hợp lệ"></label>
+                                    </label>
+
+                                    @error('email')
+                                        <div class="text-danger m-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -372,7 +390,13 @@
                                     </div>
                                     <div class="col-8">
                                         <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
-                                            aria-label="default input example" name="name">
+                                            aria-label="default input example" name="name"
+                                            @error('name') is-invalid @enderror>
+
+                                        @error('name')
+                                            <div class="text-danger m-2">{{ $message }}</div>
+                                        @enderror
+
                                     </div>
 
                                 </div>
@@ -383,9 +407,13 @@
                                         </label>
                                     </div>
                                     <div class="col-8">
-                                        <input class="form-control" type="text"
+                                        <input class="form-control" type="number"
                                             placeholder="Vui lòng nhập số điện thoại" aria-label="default input example"
-                                            name="phone">
+                                            name="phone" @error('phone') is-invalid @enderror>
+
+                                        @error('phone')
+                                            <div class="text-danger m-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                 </div>
@@ -397,7 +425,12 @@
                                     </div>
                                     <div class="col-8">
                                         <input class="form-control" type="text" placeholder="Vui lòng nhập địa chỉ"
-                                            aria-label="default input example" name="address">
+                                            aria-label="default input example" name="address"
+                                            @error('address') is-invalid @enderror>
+
+                                        @error('address')
+                                            <div class="text-danger m-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                 </div>
@@ -410,9 +443,12 @@
                                     </div>
                                     <div class="col-8">
 
-                                        <select class="form-select" aria-label="Default select example" name="province">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="province">
                                             <option selected>Thành phố Hồ Chí Minh</option>
-
+                                            @error('province')
+                                                <div class="text-danger m-2">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                 </div>
@@ -421,11 +457,13 @@
                                         <label>
                                             <span class="req">*</span>Quận/Huyện:
                                         </label>
+
                                     </div>
                                     <div class="col-8">
 
-                                        <select class="form-select" aria-label="Default select example" name="district">
-                                            <option selected>Quận</option>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="district" @error('district') is-invalid @enderror>
+                                            <option selected></option>
                                             <option>Quận 1</option>
                                             <option>Quận 2</option>
                                             <option>Quận 3</option>
@@ -452,7 +490,14 @@
                                             <option>Quận Cần Giờ</option>
 
                                         </select>
+
+                                        <div>
+                                            @error('district')
+                                                <div class="text-danger m-2">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
+
                                 </div>
 
                             </div>
@@ -468,7 +513,11 @@
                                         </label>
                                     </div>
                                     <div class="col-6 date">
-                                        <input type="date" name="shipped_at">
+                                        <input type="date" name="shipped_at"
+                                            @error('shipped_at') is-invalid @enderror>
+                                        @error('shipped_at')
+                                            <div class="text-danger m-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                 </div>
@@ -477,10 +526,12 @@
                             <Strong>Lời nhắn [Cho người nhận]</Strong>
                             <div class="col-12">
                                 <textarea class="form-control" rows="2" name="message"></textarea>
+
                             </div>
                             <Strong>Lời nhắn [Cho shop]</Strong>
                             <div class="col-12">
                                 <textarea class="form-control" rows="2" name="note"></textarea>
+
                             </div>
 
                         </div>
@@ -524,6 +575,9 @@
 
                                             <option>Thanh toán qua ví điện tử</option>
                                         </select>
+                                        @error('paid_at')
+                                            <div class="text-danger m-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                 </div>

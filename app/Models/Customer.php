@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     protected $fillable = [
         'name',
         'email',
-        'address',
+
         'phone',
     ];
 
