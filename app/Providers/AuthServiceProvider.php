@@ -58,5 +58,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-user', fn ($user) => $user->checkPermissionAccess('edit_user'));
 
         Gate::define('delete-user', fn ($user) => $user->checkPermissionAccess('delete_user'));
+
+        Gate::define('list-role', fn ($user) => $user->checkPermissionAccess('list_role'));
     }
 }

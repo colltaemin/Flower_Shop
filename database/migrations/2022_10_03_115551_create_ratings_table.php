@@ -18,7 +18,7 @@ return new class() extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->integer('product_id');
-            $table->double('rating');
+            $table->float('rating');
             $table->string('content');
             $table->timestamps();
         });

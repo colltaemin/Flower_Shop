@@ -339,8 +339,13 @@
                     @error('content')
                         <div class="text-danger">Vui lòng nhập đánh giá</div>
                     @enderror
-                    <button type="submit" class="btn btn-primary m-2">Gửi đánh
-                        giá</button>
+                    <button type="submit" class="btn btn-primary m-2">Gửi đánh giá</button>
+                    @if (session('alert'))
+                        <div class="alert alert-success m-2">
+                            {{ session('alert') }}
+                        </div>
+                    @endif
+
                 </form>
             </div>
 

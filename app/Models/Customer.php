@@ -23,6 +23,11 @@ class Customer extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function orderFlowers()
+    {
+        return $this->hasManyThrough(OrderFlower::class, Order::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'email', 'email');

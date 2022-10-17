@@ -54,7 +54,7 @@ class OrderPostRequest extends FormRequest
 
             'shipped_at.required' => 'Ngày giao hàng không được để trống',
             'shipped_at.date' => 'Ngày giao hàng không hợp lệ',
-            'paid_at.required' => 'Ngày thanh toán không được để trống',
+            'paid_at.required' => 'Hình thức thanh toán không được để trống',
 
             'name_buy.required' => 'Tên người mua không được để trống',
             'name_buy.max' => 'Tên người mua không được quá 255 ký tự',

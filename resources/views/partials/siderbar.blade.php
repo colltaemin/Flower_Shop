@@ -89,7 +89,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('orderDetails.index') }}" class="nav-link">
-                        <i class="nav-icon fa-solid fa-users-rectangle"></i>
+                        <i class="nav-icon fa-sharp fa-solid fa-bag-shopping fa-sm"></i>
                         <p>
                             Danh sách đơn hàng
 

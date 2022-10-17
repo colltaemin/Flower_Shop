@@ -321,6 +321,11 @@
                 <div class="col-md-12" style="text-align: left">
                     <form action="{{ route('orders.store') }} " method="post" enctype="multipart/form-data">
                         @csrf
+                        @if (session('alert'))
+                            <div class="alert alert-success m-2 text-center">
+                                {{ session('alert') }}
+                            </div>
+                        @endif
                         <div class="person-buy">
                             <h5>Thông tin người mua</h5>
 
@@ -333,7 +338,7 @@
                                 <div class="col-8">
                                     <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
                                         aria-label="default input example" name="name_buy"
-                                        @error('name_buy') is-invalid @enderror>
+                                        value="{{ old('name_buy') }}">
 
                                     </label>
                                     @error('name_buy')
@@ -350,7 +355,7 @@
                                 <div class="col-8">
                                     <input class="form-control" type="number" placeholder="Vui lòng nhập số điện thoại"
                                         aria-label="default input example" name="phone_buy"
-                                        @error('phone_buy') is-invalid @enderror>
+                                        value="{{ old('phone_buy') }}">
 
                                     @error('phone_buy')
                                         <div class="text-danger m-2">{{ $message }}</div>
@@ -365,8 +370,8 @@
                                 </div>
                                 <div class="col-8">
                                     <input class="form-control" type="email" placeholder="Vui lòng nhập email"
-                                        aria-label="default input example" name="email"
-                                        @error('email') is-invalid @enderror>
+                                        aria-label="default input example" name="email" value="{{ old('email') }}">
+
                                     <label for="" class="m-2" data-invalid="Email không hợp lệ"
                                         data-valid="Email hợp lệ"></label>
                                     </label>
@@ -391,7 +396,7 @@
                                     <div class="col-8">
                                         <input class="form-control" type="text" placeholder="Vui lòng nhập họ tên"
                                             aria-label="default input example" name="name"
-                                            @error('name') is-invalid @enderror>
+                                            value="{{ old('name') }}">
 
                                         @error('name')
                                             <div class="text-danger m-2">{{ $message }}</div>
@@ -409,7 +414,7 @@
                                     <div class="col-8">
                                         <input class="form-control" type="number"
                                             placeholder="Vui lòng nhập số điện thoại" aria-label="default input example"
-                                            name="phone" @error('phone') is-invalid @enderror>
+                                            name="phone" value="{{ old('phone') }}">
 
                                         @error('phone')
                                             <div class="text-danger m-2">{{ $message }}</div>
@@ -426,7 +431,7 @@
                                     <div class="col-8">
                                         <input class="form-control" type="text" placeholder="Vui lòng nhập địa chỉ"
                                             aria-label="default input example" name="address"
-                                            @error('address') is-invalid @enderror>
+                                            value="{{ old('address') }}">
 
                                         @error('address')
                                             <div class="text-danger m-2">{{ $message }}</div>
@@ -462,32 +467,60 @@
                                     <div class="col-8">
 
                                         <select class="form-select" aria-label="Default select example"
-                                            name="district" @error('district') is-invalid @enderror>
-                                            <option selected></option>
-                                            <option>Quận 1</option>
-                                            <option>Quận 2</option>
-                                            <option>Quận 3</option>
-                                            <option>Quận 4</option>
-                                            <option>Quận 5</option>
-                                            <option>Quận 6</option>
-                                            <option>Quận 7</option>
-                                            <option>Quận 8</option>
-                                            <option>Quận 9</option>
-                                            <option>Quận 10</option>
-                                            <option>Quận 11</option>
-                                            <option>Quận 12</option>
-                                            <option>Quận Tân Bình</option>
-                                            <option>Quận Phú Nhuận</option>
-                                            <option>Quận Gò Vấp</option>
-                                            <option>Quận Bình Thạnh</option>
-                                            <option>Quận Tân Phú</option>
-                                            <option>Quận Thủ Đức</option>
-                                            <option>Quận Bình Tân</option>
-                                            <option>Quận Hóc Môn</option>
-                                            <option>Quận Bình Chánh</option>
-                                            <option>Quận Nhà Bè</option>
-                                            <option>Quận Củ Chi</option>
-                                            <option>Quận Cần Giờ</option>
+                                            name="district">
+
+                                            <option value="" selected></option>
+                                            <option value="1" @if (old('district') == 1) selected @endif>
+                                                Quận 1</option>
+                                            <option value="2" @if (old('district') == 2) selected @endif>
+                                                Quận 2</option>
+                                            <option value="3" @if (old('district') == 3) selected @endif>
+                                                Quận 3</option>
+                                            <option value="4" @if (old('district') == 4) selected @endif>
+                                                Quận 4</option>
+                                            <option value="5" @if (old('district') == 5) selected @endif>
+                                                Quận 5</option>
+                                            <option value="6" @if (old('district') == 6) selected @endif>
+                                                Quận 6</option>
+                                            <option value="7" @if (old('district') == 7) selected @endif>
+                                                Quận 7</option>
+                                            <option value="8" @if (old('district') == 8) selected @endif>
+                                                Quận 8</option>
+                                            <option value="9" @if (old('district') == 9) selected @endif>
+                                                Quận 9</option>
+                                            <option value="10" @if (old('district') == 10) selected @endif>
+                                                Quận 10</option>
+                                            <option value="11" @if (old('district') == 11) selected @endif>
+                                                Quận 11</option>
+                                            <option value="12" @if (old('district') == 12) selected @endif>
+                                                Quận 12</option>
+                                            <option value="13" @if (old('district') == 13) selected @endif>
+                                                Quận Bình Tân</option>
+                                            <option value="14" @if (old('district') == 14) selected @endif>
+                                                Quận Bình Thạnh</option>
+                                            <option value="15" @if (old('district') == 15) selected @endif>
+                                                Quận Gò Vấp</option>
+                                            <option value="16" @if (old('district') == 16) selected @endif>
+                                                Quận Phú Nhuận</option>
+                                            <option value="17" @if (old('district') == 17) selected @endif>
+                                                Quận Tân Bình</option>
+                                            <option value="18" @if (old('district') == 18) selected @endif>
+                                                Quận Tân Phú</option>
+                                            <option value="19" @if (old('district') == 19) selected @endif>
+                                                Quận Thủ Đức</option>
+                                            <option value="20" @if (old('district') == 20) selected @endif>
+                                                Huyện Bình Chánh</option>
+                                            <option value="21" @if (old('district') == 21) selected @endif>
+                                                Huyện Cần Giờ</option>
+                                            <option value="22" @if (old('district') == 22) selected @endif>
+                                                Huyện Củ Chi</option>
+                                            <option value="23" @if (old('district') == 23) selected @endif>
+                                                Huyện Hóc Môn</option>
+                                            <option value="24" @if (old('district') == 24) selected @endif>
+                                                Huyện Nhà Bè</option>
+                                            <option value="25" @if (old('district') == 25) selected @endif>
+                                                Huyện Cần Giờ</option>
+                                        </select>
 
                                         </select>
 
@@ -513,8 +546,8 @@
                                         </label>
                                     </div>
                                     <div class="col-6 date">
-                                        <input type="date" name="shipped_at"
-                                            @error('shipped_at') is-invalid @enderror>
+                                        <input type="date" name="shipped_at" value="{{ old('shipped_at') }}">
+
                                         @error('shipped_at')
                                             <div class="text-danger m-2">{{ $message }}</div>
                                         @enderror
@@ -525,12 +558,12 @@
                             </div>
                             <Strong>Lời nhắn [Cho người nhận]</Strong>
                             <div class="col-12">
-                                <textarea class="form-control" rows="2" name="message"></textarea>
+                                <textarea class="form-control" rows="2" name="message" value="{{ old('message') }}"></textarea>
 
                             </div>
                             <Strong>Lời nhắn [Cho shop]</Strong>
                             <div class="col-12">
-                                <textarea class="form-control" rows="2" name="note"></textarea>
+                                <textarea class="form-control" rows="2" name="note" value="{{ old('note') }}"></textarea>
 
                             </div>
 
@@ -570,10 +603,11 @@
                                         </label>
                                     </div>
                                     <div class="col-8">
-                                        <select id="" name="paid_at">
+                                        <select class="form-select" id="" name="paid_at">
+                                            <option value=""></option>
                                             <option>Thanh toán khi nhận hàng</option>
 
-                                            <option>Thanh toán qua ví điện tử</option>
+                                            <option>Thanh toán qua ví điện tử MOMO</option>
                                         </select>
                                         @error('paid_at')
                                             <div class="text-danger m-2">{{ $message }}</div>

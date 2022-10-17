@@ -53,6 +53,15 @@ class User extends Authenticatable
         ;
     }
 
+    public function hasRole($role)
+    {
+        if (\is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        return (bool) $role->intersect($this->roles)->count();
+    }
+
     public function checkPermissionAccess($permissionCheck)
     {
         $roles = auth()->user()->roles;

@@ -26,19 +26,19 @@ class HomeController extends Controller
         }
         $products = Product::query()
             ->when(request('key'), function (Builder $query, $search): void {
-            $query
-                ->whereFulltext('name', $search)
-                ->orWhere('name', 'like', "%{$search}%")
-                ->orWhereFulltext('content', $search)
-                ->orWhere('content', 'like', "%{$search}%")
-                ->orWhereHas('tags', function (Builder $query) use ($search): void {
                 $query
                     ->whereFulltext('name', $search)
                     ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhereFulltext('content', $search)
+                    ->orWhere('content', 'like', "%{$search}%")
+                    ->orWhereHas('tags', function (Builder $query) use ($search): void {
+                    $query
+                        ->whereFulltext('name', $search)
+                        ->orWhere('name', 'like', "%{$search}%")
+                    ;
+                })
                 ;
             })
-            ;
-        })
             ->orderBy('created_at', 'desc')
             ->paginate(30)
         ;
@@ -74,6 +74,7 @@ class HomeController extends Controller
         $category = $product->category;
         $productsInCategory = Category::find($category->id)->products()->paginate(12);
         $ratingAvg = Rating::where('product_id', $product->id)->avg('rating');
+
         $name = Rating::where('product_id', $product->id)->get();
         $contents = Rating::where('product_id', $product->id)->get();
         $ratings = Rating::where('product_id', $product->id)->get();

@@ -75,10 +75,10 @@ class OrderController extends Controller
             });
             Session::forget('cart');
 
-            return redirect()->route('order-confrim')->with('success', 'User created successfully');
+            return redirect()->route('order-confirm')->with('success', 'User created successfully');
         }
 
-        if ('Thanh toán qua ví điện tử' === $request->paid_at) {
+        if ('Thanh toán qua ví điện tử MOMO' === $request->paid_at) {
             return redirect()->to(route('momo_payment'));
         }
     }
@@ -92,11 +92,12 @@ class OrderController extends Controller
             return redirect()->route('order-confirm')->with('success', 'User created successfully');
         }
 
-        // delete order and orderflower in database
         $order = Order::orderBy('id', 'desc')->first();
         $order->delete();
+        $orderFlower = OrderFlower::orderBy('id', 'desc')->first();
+        $orderFlower->delete();
 
-        return redirect()->route('home')->with('success', 'User created successfully');
+        return redirect()->route('order')->with('alert', 'Thanh toán thất bại, vui lòng thực hiện lại giao dịch');
     }
 
     public function index()
@@ -104,13 +105,13 @@ class OrderController extends Controller
         $orderFlowers = OrderFlower::with('order')->get();
         $orders = Order::query()
             ->when(request('key'), function (Builder $query, $search): void {
-            $query
-                ->where('name', $search)
-                ->orWhere('name', 'like', "%{$search}%")
-                ->orWhere('phone', $search)
-                ->orWhere('phone', 'like', "%{$search}%")
-            ;
-        })
+                $query
+                    ->where('name', $search)
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('phone', $search)
+                    ->orWhere('phone', 'like', "%{$search}%")
+                ;
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(30)
         ;

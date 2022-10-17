@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckLoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', 'CheckLoginController@checkLogin');
+// Route::get('/login', 'CheckLoginController@checkLogin');
 
 Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('index');
 
@@ -129,7 +130,7 @@ Route::prefix('orders')->group(function (): void {
     Route::get('/listOrder', [OrderController::class, 'listOrder'])->name('orders.listOrder');
 });
 
-Route::get('/order-confirm', [OrderController::class, 'show'])->name('order-confrim');
+Route::get('/order-confirm', [OrderController::class, 'show'])->name('order-confirm');
 
 Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
 

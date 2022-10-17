@@ -11,6 +11,7 @@ use App\Models\OrderFlower;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\User;
+use Auth;
 
 class AdminHomeController extends Controller
 {
@@ -27,6 +28,18 @@ class AdminHomeController extends Controller
         $ratingAvg = Rating::avg('rating');
         $categories = Category::all();
 
-        return view('admin.home', compact('orders', 'orderFlowers', 'customers', 'products', 'users', 'ratingAvg', 'total', 'rating', 'rating5', 'categories'));
+        if (Auth::check()) {
+            $roles = Auth::user()->roles()->get();
+            $role = Auth::user()->hasRole($roles);
+            // dd($role);
+
+            if (Auth::user()->hasRole($roles)) {
+                return view('admin.home', compact('orders', 'orderFlowers', 'customers', 'products', 'users', 'ratingAvg', 'total', 'rating', 'rating5', 'categories'));
+            }
+
+            return abort(401);
+        }
+
+        return redirect()->route('login');
     }
 }

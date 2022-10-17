@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Auth;
 use Illuminate\Http\Request;
 use Log;
 
@@ -13,12 +14,17 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
-        if ($key = request()->key) {
-            $roles = Role::where('name', 'like', '%'.$key.'%')->get();
+        $roles = Auth::user()->roles()->get();
+        if ($roles->contains('name', 'admin')) {
+            $roles = Role::all();
+            if ($key = request()->key) {
+                $roles = Role::where('name', 'like', '%'.$key.'%')->get();
+            }
+
+            return view('admin.role.index', compact('roles'));
         }
 
-        return view('admin.role.index', compact('roles'));
+        return abort(401);
     }
 
     public function create()

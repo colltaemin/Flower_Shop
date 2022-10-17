@@ -112,7 +112,7 @@ class PaymentController extends Controller
         $amount = 20000;
         $orderId = time().'';
         $redirectUrl = 'http://localhost:8000/momoCheck';
-        $ipnUrl = 'http://localhost:8000/order';
+        $ipnUrl = 'http://localhost:8000/momoCheck';
         $extraData = '';
 
         $requestId = time().'';

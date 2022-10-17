@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
+use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,20 +20,25 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::query()
-            ->when(request('key'), function (Builder $query, $search): void {
-            $query
-                ->where('name', $search)
-                ->orWhere('name', 'like', "%{$search}%")
-                ->orWhere('email', $search)
-                ->orWhere('email', 'like', "%{$search}%")
+        $roles = Auth::user()->roles()->get();
+        if ($roles->contains('name', 'admin')) {
+            $users = User::query()
+                ->when(request('key'), function (Builder $query, $search): void {
+                $query
+                    ->where('name', $search)
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('email', $search)
+                    ->orWhere('email', 'like', "%{$search}%")
+                ;
+            })
+                ->orderBy('created_at', 'desc')
+                ->paginate(30)
             ;
-        })
-            ->orderBy('created_at', 'desc')
-            ->paginate(30)
-        ;
 
-        return view('admin.user.index', compact('users'));
+            return view('admin.user.index', compact('users'));
+        }
+
+        return abort(401);
     }
 
     public function create()
@@ -79,7 +86,7 @@ class UserController extends Controller
             User::find($id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+
                 'email_verified_at' => now(),
             ]);
             $users = User::find($id);
@@ -119,28 +126,37 @@ class UserController extends Controller
             'rating' => 'required',
             'content' => 'required',
         ]);
+        $orders = Auth::user()->customer?->orderFlowers;
+        if (! $orders) {
+            $orders = collect();
+        }
 
         try {
             DB::beginTransaction();
-            if (Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->exists()) {
-                Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->update([
+            // check order
+            $checkOrder = $orders->where('product_id', $request->product_id)->first();
+            if ($checkOrder) {
+                if (Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->exists()) {
+                    Rating::where('user_id', $request->user_id)->where('product_id', $request->product_id)->update([
+                        'rating' => $request->rating,
+                        'content' => $request->content,
+                    ]);
+                } else {
+                    $rating = Rating::create([
+                        'user_id' => Auth::id(),
+                        'product_id' => $request->product_id,
+                        'rating' => $request->rating,
+                        'content' => $request->content,
+                        'name' => Auth::user()->name,
+                    ]);
+                }
+                $product = Product::find($request->product_id);
+                $product->update([
                     'rating' => $request->rating,
-                    'content' => $request->content,
                 ]);
             } else {
-                Rating::create([
-                    'user_id' => $request->user_id,
-                    'product_id' => $request->product_id,
-                    'rating' => $request->rating,
-                    'content' => $request->content,
-                    'name' => $request->name,
-                ]);
+                return redirect()->back()->with('alert', 'Bạn chưa mua sản phẩm này nên không thể đánh giá!');
             }
-
-            $rate = Product::find($request->product_id);
-            $rate->update([
-                'rating' => $request->rating,
-            ]);
 
             DB::commit();
         } catch (\Exception $e) {
