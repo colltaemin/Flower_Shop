@@ -379,9 +379,9 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="">
+                                                {{-- <div class="">
                                                     <button class="btn btn-primary">Chi tiết</button>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
 

@@ -27,6 +27,7 @@ return new class() extends Migration
             $table->string('message')->nullable();
             $table->string('paid_at')->nullable();
             $table->string('status')->default('pending');
+            $table->integer('total')->nullable();
         });
     }
 

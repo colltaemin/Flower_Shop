@@ -32,11 +32,11 @@ class HomeController extends Controller
                     ->orWhereFulltext('content', $search)
                     ->orWhere('content', 'like', "%{$search}%")
                     ->orWhereHas('tags', function (Builder $query) use ($search): void {
-                    $query
-                        ->whereFulltext('name', $search)
-                        ->orWhere('name', 'like', "%{$search}%")
-                    ;
-                })
+                        $query
+                            ->whereFulltext('name', $search)
+                            ->orWhere('name', 'like', "%{$search}%")
+                        ;
+                    })
                 ;
             })
             ->orderBy('created_at', 'desc')

@@ -301,13 +301,26 @@
     </style>
 
     <style>
+        /* html {
+            position: relative;
+            min-height: 100%;
+        }
+
         body {
-            font-family: 'Nunito', sans-serif;
+            margin-bottom: 60px;
+
+        } */
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="d-flex flex-column min-vh-100">
 
     <x-header>
 
@@ -478,6 +491,10 @@
 
             renderCartItems(@json(Session::get('cart', [])));
         </script>
+
+        <x-footer class="footer bg-light mt-auto py-3">
+
+        </x-footer>
 </body>
 
 </html>

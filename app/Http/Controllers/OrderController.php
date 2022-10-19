@@ -61,6 +61,13 @@ class OrderController extends Controller
                 ]);
             }
 
+            // update total
+            $orderFlowers = OrderFlower::where('order_id', $order->id)->get();
+            $total = $orderFlowers->sum('price');
+            $order->update([
+                'total' => $total,
+            ]);
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -113,7 +120,7 @@ class OrderController extends Controller
                 ;
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(30)
+            ->paginate(10)
         ;
 
         return view('admin.order.index', compact('orders', 'orderFlowers'));

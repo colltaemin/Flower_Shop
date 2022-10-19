@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('index');
 
+Route::get('/admin/home/Chart', [AdminHomeController::class, 'orderChart'])->name('orderChart');
+
 Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
 Route::get('/theme', fn () => view('pages.theme'))->name('theme');

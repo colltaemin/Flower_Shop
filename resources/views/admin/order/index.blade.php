@@ -56,8 +56,7 @@
                                         </td>
 
                                         <td class="col-1">
-                                            {{ number_format($order->orderFlowers->sum(fn($orderFlower) => $orderFlower->price)) }}
-                                            VNĐ
+                                            {{ number_format($order->total) }} VNĐ
                                         </td>
 
                                         <td class="col-1">{{ $order->name }}</td>

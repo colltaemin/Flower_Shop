@@ -23,6 +23,7 @@ class Order extends Model
         'shipped_at',
         'paid_at',
         'status',
+        'total',
     ];
 
     public function customer()
@@ -32,6 +33,6 @@ class Order extends Model
 
     public function orderFlowers()
     {
-        return $this->hasMany(OrderFlower::class);
+        return $this->hasMany(OrderFlower::class, 'order_id');
     }
 }

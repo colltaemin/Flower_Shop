@@ -19,12 +19,19 @@
                             Danh mục
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Hoa Sinh Nhật</a></li>
-                            <li><a class="dropdown-item" href="#">Hoa Khai Trương</a></li>
-                            <li><a class="dropdown-item" href="#">Hoa Chúc Mừng</a></li>
-                            <li><a class="dropdown-item" href="#">Hoa Chia Buồn</a></li>
-                            <li><a class="dropdown-item" href="#">Hoa Tình Yêu</a></li>
-                            <li><a class="dropdown-item" href="#">Hoa Mừng Tốt Nghiệp</a></li>
+
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 1]) }}">Hoa Sinh Nhật</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 2]) }}">Hoa Khai Trương</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 3]) }}">Hoa Chúc Mừng</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 4]) }}">Hoa Chia Buồn</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 5]) }}">Hoa Tình Yêu</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('category', ['id' => 6]) }}">Hoa Mừng Tốt
+                                    Nghiệp</a></li>
                         </ul>
                     </li>
                     <li class="nav-item p-2">

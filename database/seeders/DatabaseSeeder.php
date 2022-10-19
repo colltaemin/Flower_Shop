@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -18,13 +20,65 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(100)->create();
 
         \App\Models\User::factory(1)->create([
-            'name' => 'Test ADmin',
-            'email' => 'test@example.com',
+            'name' => 'ADmin',
+            'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$zB51E5Kktvf8iozW9k0IGek1eTQLDgv0txdcPUde1kSdnfZX0PX.O', // password
             'remember_token' => Str::random(10),
         ]);
+
+        \App\Models\User::factory(1)->create([
+            'name' => 'Staff',
+            'email' => 'staff@staff.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$zB51E5Kktvf8iozW9k0IGek1eTQLDgv0txdcPUde1kSdnfZX0PX.O', // password
+            'remember_token' => Str::random(10),
+        ]);
+
+        \App\Models\Role::factory(1)->create([
+            'name' => 'admin',
+            'display_name' => 'Quản trị viên',
+        ]);
+
+        \App\Models\Role::factory(1)->create([
+            'name' => 'staff',
+            'display_name' => 'Nhân viên',
+        ]);
+
+        \App\Models\RoleUser::factory(1)->create([
+            'role_id' => 1,
+            'user_id' => 101,
+        ]);
+
+        \App\Models\RoleUser::factory(1)->create([
+            'role_id' => 2,
+            'user_id' => 102,
+        ]);
+
         \App\Models\Product::factory(100)->create();
+
+        $dates = [
+            '2021-01-01', '2021-01-02', '2021-01-03',  '2021-01-04', '2021-01-05', '2021-01-06',
+            '2022-01-01', '2022-01-02', '2022-01-03',
+            '2022-01-04', '2022-01-05', '2022-01-06',
+            '2022-01-07', '2022-01-08', '2022-01-09',
+            '2022-01-10', '2022-01-11', '2022-01-12',
+            '2023-01-01', '2023-01-02', '2023-01-03',
+            '2023-01-04', '2023-01-05', '2023-01-06',
+            '2023-01-07', '2023-01-08', '2023-01-09',
+            '2023-01-10', '2023-01-11', '2023-01-12',
+        ];
+        \App\Models\Order::factory(100)->has(
+            \App\Models\OrderFlower::factory(random_int(1, 4))->state([
+                'product_id' => Product::inRandomOrder()->limit(1)->first()->id,
+                'product_name' => Product::inRandomOrder()->limit(1)->first()->name,
+                'price' => Product::inRandomOrder()->limit(1)->first()->price,
+            ]),
+            'orderFlowers'
+        )
+            ->state([
+            ])->create()
+        ;
 
         \App\Models\Permission::factory(1)->create([
             'name' => 'Danh mục sản phẩm',

@@ -41,7 +41,7 @@
 
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>{{ $total }}
+                                <h3> {{ number_format($total) }}
                                     <i class="fa-sharp fa-solid fa-money-check-dollar fa-sm"></i>
                                 </h3>
                                 <p>Doanh thu</p>
@@ -83,8 +83,14 @@
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="{{ route('users.index') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            @if ($role == 'admin')
+                                <a href="{{ route('users.index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            @else
+                                <a href="{{ url('abort(401)') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            @endif
+
                         </div>
                     </div>
 
@@ -139,6 +145,16 @@
                     </div>
 
                 </div>
+                <div class="btn-group justify-center" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" data-group="day">Day</button>
+                    <button type="button" class="btn btn-secondary" data-group="week">Week</button>
+                    <button type="button" class="btn btn-secondary" data-group="month">Month</button>
+                    <button type="button" class="btn btn-secondary" data-group="year">Year</button>
+                </div>
+                <div class="text-center">THỐNG KÊ DOANH THU</div>
+                <div>
+                    <canvas id="myChart" width="200px" height="50px"></canvas>
+                </div>
 
             </div><!-- /.container-fluid -->
         </div>
@@ -151,4 +167,44 @@
 
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+
+                    }
+
+
+                }
+
+
+            }
+        });
+
+        function displayChart(group = 'month') {
+            fetch("{{ route('orderChart') }}?group=" + group)
+                .then(response => response.json())
+                .then(json => {
+                    myChart.data.labels = json.labels,
+                        myChart.data.datasets = json.datasets,
+                        myChart.update();
+                });
+        }
+        $('.btn-group .btn').on('click', function(e) {
+            e.preventDefault();
+            displayChart($(this).data('group'));
+        });
+
+        displayChart();
+    </script>
 @endsection
