@@ -39,19 +39,19 @@ class AdminProductController extends Controller
     {
         $products = Product::query()
             ->when(request('key'), function (Builder $query, $search): void {
-            $query
-                ->whereFulltext('name', $search)
-                ->orWhere('name', 'like', "%{$search}%")
-                ->orWhereFulltext('content', $search)
-                ->orWhere('content', 'like', "%{$search}%")
-                ->orWhereHas('category', function (Builder $query) use ($search): void {
                 $query
-                    ->where('name', $search)
+                    ->whereFulltext('name', $search)
                     ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhereFulltext('content', $search)
+                    ->orWhere('content', 'like', "%{$search}%")
+                    ->orWhereHas('category', function (Builder $query) use ($search): void {
+                    $query
+                        ->where('name', $search)
+                        ->orWhere('name', 'like', "%{$search}%")
+                    ;
+                })
                 ;
             })
-            ;
-        })
             ->orderBy('created_at', 'desc')
             ->paginate(8)
         ;

@@ -24,13 +24,13 @@ class UserController extends Controller
         if ($roles->contains('name', 'admin')) {
             $users = User::query()
                 ->when(request('key'), function (Builder $query, $search): void {
-                $query
-                    ->where('name', $search)
-                    ->orWhere('name', 'like', "%{$search}%")
-                    ->orWhere('email', $search)
-                    ->orWhere('email', 'like', "%{$search}%")
-                ;
-            })
+                    $query
+                        ->where('name', $search)
+                        ->orWhere('name', 'like', "%{$search}%")
+                        ->orWhere('email', $search)
+                        ->orWhere('email', 'like', "%{$search}%")
+                    ;
+                })
                 ->orderBy('created_at', 'desc')
                 ->paginate(30)
             ;
