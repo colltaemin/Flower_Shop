@@ -49,12 +49,11 @@
                                         <input type="file" accept="image/*" class="form-control-file"
                                             name="feature_image_path">
                                     </div>
-
-                                    <div class="form-group col-md-6">
+                                    {{-- <div class="form-group col-md-6">
                                         <label>Ảnh chi tiết</label>
                                         <input type="file" multiple accept="image/*" class="form-control-file"
                                             name="image_path[]">
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -62,7 +61,10 @@
                                         <select class="form-control select2_category @error('price') is-invalid @enderror"
                                             name="category_id" value="{{ old('category_id') }}">
                                             <option value="">Danh mục sản phẩm</option>
-                                            {!! $htmlOption !!}
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+
                                         </select>
                                         <div class="col-md-6">
                                             @error('category_id')
@@ -89,8 +91,7 @@
                         <div class="col-md-12 p-3">
                             <div class="form-group">
                                 <label>Nhập nôị dung</label>
-                                <textarea name='contents' class="form-control tinymce_editor_init @error('contents') is-invalid @enderror"
-                                    rows="3">
+                                <textarea name='contents' class="form-control @error('contents') is-invalid @enderror" rows="3">
                                 </textarea>
                                 <div class="col-md-6">
                                     @error('content')

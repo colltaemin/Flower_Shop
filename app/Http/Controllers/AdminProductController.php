@@ -39,19 +39,19 @@ class AdminProductController extends Controller
     {
         $products = Product::query()
             ->when(request('key'), function (Builder $query, $search): void {
-            $query
-                ->whereFulltext('name', $search)
-                ->orWhere('name', 'like', "%{$search}%")
-                ->orWhereFulltext('content', $search)
-                ->orWhere('content', 'like', "%{$search}%")
-                ->orWhereHas('category', function (Builder $query) use ($search): void {
                 $query
-                    ->where('name', $search)
+                    ->whereFulltext('name', $search)
                     ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhereFulltext('content', $search)
+                    ->orWhere('content', 'like', "%{$search}%")
+                    ->orWhereHas('category', function (Builder $query) use ($search): void {
+                        $query
+                            ->where('name', $search)
+                            ->orWhere('name', 'like', "%{$search}%")
+                        ;
+                    })
                 ;
             })
-            ;
-        })
             ->orderBy('created_at', 'desc')
             ->paginate(8)
         ;
@@ -62,8 +62,9 @@ class AdminProductController extends Controller
     public function create()
     {
         $htmlOption = $this->getCategory($parentId = '');
+        $categories = $this->category->all();
 
-        return view('admin.product.add', compact('htmlOption'));
+        return view('admin.product.add', compact('htmlOption', 'categories'));
     }
 
     public function getCategory($parentId)
@@ -92,15 +93,15 @@ class AdminProductController extends Controller
                 $dataProductCreate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
             }
             $product = $this->product->create($dataProductCreate);
-            if ($request->hasFile('image_path')) {
-                foreach ($request->image_path as $fileItem) {
-                    $dataProductImageDetail = $this->uploadImageMultiple($fileItem, 'product');
-                    $product->images()->create([
-                        'image_name' => $dataProductImageDetail['file_name'],
-                        'image_path' => $dataProductImageDetail['file_path'],
-                    ]);
-                }
-            }
+            // if ($request->hasFile('image_path')) {
+            //     foreach ($request->image_path as $fileItem) {
+            //         $dataProductImageDetail = $this->uploadImageMultiple($fileItem, 'product');
+            //         $product->images()->create([
+            //             'image_name' => $dataProductImageDetail['file_name'],
+            //             'image_path' => $dataProductImageDetail['file_path'],
+            //         ]);
+            //     }
+            // }
             if (! empty($request->tags)) {
                 foreach ($request->tags as $tagItem) {
                     $tagInstance = $this->tag->firstOrCreate(['name' => $tagItem]);
@@ -122,8 +123,9 @@ class AdminProductController extends Controller
     {
         $product = $this->product->find($id);
         $htmlOption = $this->getCategory($product->category_id);
+        $categories = $this->category->all();
 
-        return view('admin.product.edit', compact('htmlOption', 'product'));
+        return view('admin.product.edit', compact('htmlOption', 'product', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -143,16 +145,16 @@ class AdminProductController extends Controller
             }
             $product = $this->product->find($id)->update($dataProductUpdate);
             $product = $this->product->find($id);
-            if ($request->hasFile('image_path')) {
-                $this->productImage->where('product_id', $id)->delete();
-                foreach ($request->image_path as $fileItem) {
-                    $dataProductImageDetail = $this->uploadImageMultiple($fileItem, 'product');
-                    $product->images()->create([
-                        'image_name' => $dataProductImageDetail['file_name'],
-                        'image_path' => $dataProductImageDetail['file_path'],
-                    ]);
-                }
-            }
+            // if ($request->hasFile('image_path')) {
+            //     $this->productImage->where('product_id', $id)->delete();
+            //     foreach ($request->image_path as $fileItem) {
+            //         $dataProductImageDetail = $this->uploadImageMultiple($fileItem, 'product');
+            //         $product->images()->create([
+            //             'image_name' => $dataProductImageDetail['file_name'],
+            //             'image_path' => $dataProductImageDetail['file_path'],
+            //         ]);
+            //     }
+            // }
             if (! empty($request->tags)) {
                 foreach ($request->tags as $tagItem) {
                     $tagInstance = $this->tag->firstOrCreate(['name' => $tagItem]);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait StorageImageTrait
 {
-    public function uploadImage($request, $fieldName, $foderName)
+    public static function uploadImage($request, $fieldName, $foderName)
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->{$fieldName};
@@ -25,7 +25,7 @@ trait StorageImageTrait
         return null;
     }
 
-    public function uploadImageMultiple($file, $foderName)
+    public static function uploadImageMultiple($file, $foderName)
     {
         $fileNameOriginal = $file->getClientOriginalName();
         $fileNameHash = str_random('20').'.'.$file->getClientOriginalExtension();

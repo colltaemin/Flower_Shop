@@ -318,7 +318,7 @@
     <div class="container" style="margin-top: 110px">
         <div class="row">
             <div class="col-3 overflow-hidden">
-                <img class="img-thumbnail h-full w-full" src="{{ $product->feature_image_path }}" alt="Card image cap">
+                <img class="img-thumbnail h-full w-full" src="{{ $product->feature_image_path }}" alt="">
                 <div id="rateYo" class="m-2"></div>
                 <form action="{{ route('users.rating') }}" method="post">
                     @csrf

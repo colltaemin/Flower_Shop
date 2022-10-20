@@ -42,6 +42,16 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('categories'));
     }
 
+    public function addProduct()
+    {
+        $categories = $this->category->latest()->paginate(10);
+        if ($key = request()->key) {
+            $categories = $this->category->where('name', 'like', '%'.$key.'%')->latest()->paginate(10);
+        }
+
+        return view('admin.product.add', compact('categories'));
+    }
+
     public function store(Request $request)
     {
         $this->category->create([

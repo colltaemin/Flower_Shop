@@ -63,6 +63,8 @@ Route::get('/sendMail', [MailController::class, 'sendMail'])->name('sendMail');
 
 Route::post('/rating{id}', [HomeController::class, 'rating'])->name('rating')->middleware('auth');
 
+Route::get('/admin/products/create', [CategoryController::class, 'addProduct'])->name('addProduct');
+
 Route::prefix('admin')->group(function (): void {
     Route::prefix('categories')->group(function (): void {
         Route::get('/create', [CategoryController::class, 'create'])->name('categories.create')->middleware('can:add-category');

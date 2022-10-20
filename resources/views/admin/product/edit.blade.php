@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    {{-- <div class="form-group col-md-6">
                                         <label>Ảnh chi tiết</label>
                                         <input type="file" multiple class="form-control-file" name="image_path[]">
                                         <div class="col-md-12">
@@ -60,14 +60,19 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Chọn Danh Mục Sản Phẩm</label>
                                         <select class="form-control select2_category" name="category_id">
                                             <option value="">Danh mục sản phẩm</option>
-                                            {!! $htmlOption !!}
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -85,7 +90,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nhập nôị dung</label>
-                                <textarea name='contents' class="form-control tinymce_editor_init" rows="3">{{ $product->content }}</textarea>
+                                <textarea name='contents' class="form-control" rows="3">{{ $product->content }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
