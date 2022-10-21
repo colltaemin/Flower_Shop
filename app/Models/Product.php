@@ -27,6 +27,11 @@ class Product extends Model
         ;
     }
 
+    public function rating()
+    {
+        return $this->belongsTo(Rating::class, 'id', 'product_id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');

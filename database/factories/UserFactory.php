@@ -19,8 +19,15 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $first_name = [
+            'Đạt', 'Long', 'Hoàng', 'Chuyên', 'Chương', 'Công', 'Nam', 'Yến', 'Vắn Toàn', 'Hữu Trung', 'Linh Nhi', 'Bảo Long', 'Hoàng Hùng', 'Văn Định', 'Kiều Chi', 'Linh Nhi', 'Văn Đại', 'Hùng Dũng', 'Quang Linh', 'Thùy Tiên',
+        ];
+
+        $last_name = ['Hoàng', 'Lê', 'Huỳnh', 'Trần', 'Nguyễn', 'Võ', 'Trịnh',
+        ];
+
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->randomElement($last_name).' '.$this->faker->randomElement($first_name),
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$zB51E5Kktvf8iozW9k0IGek1eTQLDgv0txdcPUde1kSdnfZX0PX.O', // password

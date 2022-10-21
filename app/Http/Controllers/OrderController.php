@@ -92,7 +92,8 @@ class OrderController extends Controller
 
     public function momoCheck(Request $request)
     {
-        $resultCode = $request->get('resultCode');
+        // dd($request->all());
+        $resultCode = (int) $request->get('resultCode');
         if (0 === $resultCode) {
             Session::forget('cart');
 

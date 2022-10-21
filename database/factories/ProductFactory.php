@@ -25,6 +25,7 @@ class ProductFactory extends Factory
             'content' => $this->faker->text,
             'category_id' => $this->faker->numberBetween(1, 6),
             'user_id' => $this->faker->numberBetween(1, 10),
+            // 'rating' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

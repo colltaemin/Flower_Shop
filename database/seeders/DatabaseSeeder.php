@@ -7,6 +7,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Product;
+use App\Models\Rating;
 use DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -56,8 +57,20 @@ class DatabaseSeeder extends Seeder
             'user_id' => 102,
         ]);
 
+        $content = [
+            'Sản phẩm tốt', 'Hoa tươi', 'Hoa đẹp', 'Phục vụ tốt', 'Hoa chất lượng', 'hoa đẹp và chất lượng lắm bà con ơi!
+            Mình sẽ ủng hộ shop này dài dài', 'Mình đã mua ở rất nhiều nơi rồi, shop này có thể là điểm đến cuối cùng của mình, bán toàn đồ chất lượng', 'Dịch vụ chăm sóc khách hàng ở shop này rất tốt luôn mọi người ạ, sản phẩm lại còn ổn áp nữa chứ',
+        ];
+
         \App\Models\Product::factory(100)->create();
 
+        Rating::factory(100)->create([
+            'product_id' => fn () => Product::all()->random(),
+            'user_id' => fn () => \App\Models\User::all()->random(),
+            'content' => fn () => $content[array_rand($content)],
+            'rating' => fn () => random_int(1, 5),
+            'name' => fn () => \App\Models\User::all()->random()->name,
+        ]);
         $dates = [
             '2021-01-01', '2021-01-02', '2021-01-03',  '2021-01-04', '2021-01-05', '2021-01-06',
             '2022-01-01', '2022-01-02', '2022-01-03',
